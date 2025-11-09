@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU Campus - Search & Reserve Facilities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
+        /* Custom Brand Colors */
+        .text-ku-purple { color: #4338ca; } 
+        .focus\:ring-ku-purple:focus { --tw-ring-color: #4338ca; }
+        .focus\:border-ku-purple:focus { --tw-border-color: #4338ca; }
+        .hover\:text-ku-purple:hover { color: #4338ca; }
+        .bg-ku-purple-light { background-color: #ede9fe; }
+
+        /* Requested Button Colors */
+        .bg-ku-purple-new { background-color: #824aef; }
+        .hover\:bg-ku-purple-new-hover:hover { background-color: #713de6; } 
+        
+        .bg-powerbi-yellow { background-color: #F2C811; }
+        .hover\:bg-powerbi-yellow-hover:hover { background-color: #e0b80f; }
+
+        body { height: 100vh; } 
+        
+        /* Styles for the dynamic column visibility */
+        .table-column-data {
+            display: table-cell; /* Default display for table cells */
+        }
+        /* Style for the Modal backdrop and positioning */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+    </style>
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body class="antialiased flex flex-col">
+
+    <!-- Header -->
+    <header class="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm sticky top-0 z-30 flex-shrink-0">
+        <div class="flex items-center">
+            <svg class="w-6 h-6 mr-3 text-ku-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            <span class="text-xl font-bold text-ku-purple tracking-wide">KU Campus</span>
+        </div>
+        
+        <!-- User Menu -->
+        <div class="flex items-center space-x-3">
+            <button class="text-gray-500 hover:text-ku-purple">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-2.81A3 3 0 0018 10V8a6 6 0 10-12 0v2c0 1.5.54 2.92 1.405 4.19L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9"></path></svg>
+            </button>
+            <div class="flex items-center space-x-2 cursor-pointer">
+                <span class="text-sm font-medium text-gray-700 hidden sm:block">Alparslan O.</span>
+                <img class="h-8 w-8 rounded-full object-cover" src="https://placehold.co/32x32/14b8a6/FFFFFF?text=AO" alt="User Avatar" onerror="this.onerror=null; this.src='https://placehold.co/32x32/065f46/FFFFFF?text=U';">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-16 sm:w-64 bg-slate-800 flex-shrink-0 overflow-y-auto">
+            <div class="p-4 text-white">
+                <p class="hidden sm:block text-xs font-medium uppercase tracking-wider mb-4 text-indigo-400">Navigation Menu</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="group">
+                        <a href="index.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            <span class="hidden sm:block">Home</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="search-reserve.html" class="flex items-center p-2 rounded-lg bg-slate-700 text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span class="hidden sm:block">Search & Reserve</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="my-reservations.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span class="hidden sm:block">My Reservations</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="manage-reservations.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            <span class="hidden sm:block">Manage Reservations</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="student-availability.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span class="hidden sm:block">Student Availability</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="powerbi-reports.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a1 1 0 0 0-1 1v16a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1Zm5 4a1 1 0 0 0-1 1v12a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm5 3a1 1 0 0 0-1 1v9a1 1 0 0 0 2 0v-9a1 1 0 0 0-1-1Zm5-4a1 1 0 0 0-1 1v13a1 1 0 0 0 2 0V7a1 1 0 0 0-1-1Z"/></svg>
+                            <span class="hidden sm:block">Power BI Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-y-auto flex flex-col">
+            <main class="flex-grow p-6 pb-20">
+                
+                <div class="mb-6">
+                    <!-- Breadcrumbs & Title -->
+                    <nav class="text-xs sm:text-sm text-gray-500 mb-4">
+                        <span class="text-gray-400">Home / Facility Reservations /</span>
+                        <span class="font-semibold text-ku-purple">Search & Reserve</span>
+                    </nav>
+                    <h1 class="text-2xl font-bold text-gray-800">Search & Reserve Facilities</h1>
+                </div>
+
+                <!-- Search Filters Card -->
+                <div class="bg-white rounded-xl shadow-lg mb-8">
+                    <div class="w-full flex justify-between items-center p-6 border-b border-gray-200">
+                        <h2 class="text-xl font-semibold text-gray-800">Facility Search Filters</h2>
+                    </div>
+                    
+                    <div id="filterContent" class="p-6">
+
+                        <!-- Accordion 1: Facility Details -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="accordion1">
+                                Facility Details
+                                <svg id="icon1" class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="accordion1" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    
+                                    <!-- Facility Type -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="facilityType" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Facility Type
+                                        </label>
+                                        <select id="facilityType" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
+                                            <option>All</option>
+                                            <option>Classroom</option>
+                                            <option>Meeting Room</option>
+                                            <option>Laboratory</option>
+                                            <option>Sports Facility</option>
+                                            <option>Auditorium</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Building -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="building" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Building
+                                        </label>
+                                        <select id="building" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
+                                            <option>All</option>
+                                            <option>Engineering Building</option>
+                                            <option>Social Sciences Building</option>
+                                            <option>Science Building</option>
+                                            <option>Library</option>
+                                            <option>Student Center</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Floor -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="floor" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Floor
+                                        </label>
+                                        <select id="floor" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
+                                            <option>All</option>
+                                            <option>Ground Floor</option>
+                                            <option>1st Floor</option>
+                                            <option>2nd Floor</option>
+                                            <option>3rd Floor</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Capacity -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="capacity" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Minimum Capacity
+                                        </label>
+                                        <input type="number" id="capacity" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Enter minimum capacity" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Accordion 2: Date & Time -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="accordion2">
+                                Date & Time
+                                <svg id="icon2" class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="accordion2" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    
+                                    <!-- Date -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="reservationDate" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            <span class="text-red-600">*</span> Reservation Date
+                                        </label>
+                                        <div class="relative w-full sm:w-2/3">
+                                            <input type="text" id="reservationDate" class="w-full border border-gray-300 rounded-lg p-2.5 pr-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Select Date">
+                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Start Time -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="startTime" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            <span class="text-red-600">*</span> Start Time
+                                        </label>
+                                        <input type="time" id="startTime" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150">
+                                    </div>
+                                    
+                                    <!-- End Time -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="endTime" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            <span class="text-red-600">*</span> End Time
+                                        </label>
+                                        <input type="time" id="endTime" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150">
+                                    </div>
+                                    
+                                    <!-- Duration -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="duration" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Duration (hours)
+                                        </label>
+                                        <input type="number" id="duration" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Auto-calculated" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion 3: Additional Requirements -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="accordion3">
+                                Additional Requirements
+                                <svg id="icon3" class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="accordion3" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    
+                                    <!-- Equipment -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="equipment" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Equipment
+                                        </label>
+                                        <select id="equipment" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
+                                            <option>No Preference</option>
+                                            <option>Projector</option>
+                                            <option>Whiteboard</option>
+                                            <option>Computer</option>
+                                            <option>Audio System</option>
+                                            <option>Video Conference</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Accessibility -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="accessibility" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Accessibility
+                                        </label>
+                                        <select id="accessibility" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
+                                            <option>No Preference</option>
+                                            <option>Wheelchair Accessible</option>
+                                            <option>Elevator Access</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Search and Clear Buttons -->
+                        <div class="mt-8 flex justify-end space-x-4">
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-8 rounded-xl shadow-md transition duration-150 flex items-center">
+                                Clear Selection
+                            </button>
+                            <button class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-8 rounded-xl shadow-md transition duration-150 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                Search Available Facilities
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results Card -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-4">Available Facilities</h2>
+                    
+                    <!-- Table Controls -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-3 sm:space-y-0">
+                        
+                        <!-- Filter Input -->
+                        <div class="relative w-full sm:w-auto">
+                            <input type="text" placeholder="Filter current results..." class="w-full sm:w-64 border border-gray-300 rounded-lg p-2.5 pl-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150">
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row w-full sm:w-auto space-y-2 sm:space-y-0 sm:space-x-3 sm:justify-end">
+                            <!-- Power BI Button -->
+                            <button class="bg-powerbi-yellow hover:bg-powerbi-yellow-hover text-black font-semibold py-2 px-4 rounded-xl shadow-sm transition duration-150 w-full sm:w-auto">
+                                Open Power BI Report
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- Results Table -->
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facility ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facility Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Building</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Floor</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacity</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Equipment</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- Sample Data Rows -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FAC-101</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Conference Room A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting Room</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Engineering</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2nd Floor</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Projector, Whiteboard</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Available</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="booking-details.html" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FAC-205</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Computer Lab 3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Laboratory</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Science Building</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1st Floor</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Computers, Projector</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Available</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="booking-details.html" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4 flex justify-between items-center text-sm text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <select class="border border-gray-300 rounded-lg p-1.5 text-xs bg-white">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                            </select>
+                            <span>2 entries shown</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            </button>
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+        
+    <!-- Footer -->
+    <footer class="w-full bg-slate-800 text-white text-xs p-3 flex justify-end items-center z-40 sticky bottom-0 flex-shrink-0">
+        <div class="flex items-center space-x-4">
+            <span>Copyright © 2025 Koç University Version 9.1.12</span>
+            <a href="#" class="hover:text-indigo-400">Privacy Policy</a>
+            <a href="#" class="hover:text-indigo-400">Cookie Policy</a>
+        </div>
+    </footer>
+    
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 1. ACCORDION LOGIC ---
+            const toggles = document.querySelectorAll('.accordion-toggle');
+
+            toggles.forEach(toggle => {
+                const targetId = toggle.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                const icon = toggle.querySelector('svg');
+                
+                // Ensure content starts visible by default
+                content.classList.remove('hidden');
+
+                toggle.addEventListener('click', function() {
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // --- 2. Initialize Flatpickr for Date Picker ---
+            flatpickr("#reservationDate", {
+                dateFormat: "Y-m-d",
+                minDate: "today"
+            });
+
+            // --- 3. Calculate Duration ---
+            const startTimeInput = document.getElementById('startTime');
+            const endTimeInput = document.getElementById('endTime');
+            const durationInput = document.getElementById('duration');
+
+            function calculateDuration() {
+                const startTime = startTimeInput.value;
+                const endTime = endTimeInput.value;
+
+                if (startTime && endTime) {
+                    const start = new Date(`1970-01-01T${startTime}:00`);
+                    const end = new Date(`1970-01-01T${endTime}:00`);
+                    const diff = (end - start) / 1000 / 60 / 60; // Convert to hours
+
+                    if (diff > 0) {
+                        durationInput.value = diff.toFixed(1);
+                    } else {
+                        durationInput.value = '';
+                    }
+                }
+            }
+
+            startTimeInput.addEventListener('change', calculateDuration);
+            endTimeInput.addEventListener('change', calculateDuration);
+        });
+    </script>
+
+</body>
+</html>
