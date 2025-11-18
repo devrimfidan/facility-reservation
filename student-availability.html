@@ -78,6 +78,12 @@
                             <span class="hidden sm:block">Student Availability</span>
                         </a>
                     </li>
+                    <li class="group">
+                        <a href="manage-facilities.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"></path></svg>
+                            <span class="hidden sm:block">Manage Facilities</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="powerbi-reports.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
                             <svg class="w-6 h-6 sm:mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a1 1 0 0 0-1 1v16a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1Zm5 4a1 1 0 0 0-1 1v12a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm5 3a1 1 0 0 0-1 1v9a1 1 0 0 0 2 0v-9a1 1 0 0 0-1-1Zm5-4a1 1 0 0 0-1 1v13a1 1 0 0 0 2 0V7a1 1 0 0 0-1-1Z"/></svg>
@@ -103,26 +109,34 @@
 
                 <!-- Search Card -->
                 <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Search Student</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Class Search</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="studentId" class="block text-sm font-medium text-gray-700 mb-2">
-                                Student ID
-                            </label>
-                            <input type="text" id="studentId" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Enter Student ID">
+                            <label for="courseId" class="block text-sm font-medium text-gray-700 mb-2">Course ID</label>
+                            <input type="text" id="courseId" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="e.g., 003999">
                         </div>
-
                         <div>
-                            <label for="studentName" class="block text-sm font-medium text-gray-700 mb-2">
-                                Student Name
-                            </label>
-                            <input type="text" id="studentName" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Enter Student Name">
+                            <label for="subjectArea" class="block text-sm font-medium text-gray-700 mb-2">Subject Area</label>
+                            <input type="text" id="subjectArea" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="e.g., MATH">
+                        </div>
+                        <div>
+                            <label for="catalogNumber" class="block text-sm font-medium text-gray-700 mb-2">Catalog Number</label>
+                            <input type="text" id="catalogNumber" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="e.g., 398">
+                        </div>
+                        <div>
+                            <label for="term" class="block text-sm font-medium text-gray-700 mb-2">Term</label>
+                            <select id="term" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                <option value="">Select Term</option>
+                                <option value="2025F">2025 Fall</option>
+                                <option value="2025S">2025 Spring</option>
+                                <option value="2024F">2024 Fall</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="mt-6 flex justify-end">
-                        <button class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-8 rounded-xl shadow-md transition duration-150">
+                        <button id="classSearchBtn" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-8 rounded-xl shadow-md transition duration-150">
                             <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             Search
                         </button>
@@ -131,66 +145,44 @@
 
                 <!-- Results Card -->
                 <div class="bg-white rounded-xl shadow-lg p-8">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-4">Student Schedule</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-4">Class Details & Availability</h2>
                     
-                    <!-- Student Info -->
-                    <div class="mb-6 bg-gray-50 p-6 rounded-lg">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Class Details -->
+                    <div class="mb-6 bg-gray-50 p-6 rounded-lg" id="classDetails">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div>
-                                <p class="text-sm text-gray-500">Student ID</p>
-                                <p class="text-base font-medium text-gray-900">S-123456</p>
+                                <p class="text-sm text-gray-500">Course ID</p>
+                                <p id="cdCourseId" class="text-base font-medium text-gray-900">—</p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">Name</p>
-                                <p class="text-base font-medium text-gray-900">Ahmet Yılmaz</p>
+                                <p class="text-sm text-gray-500">Subject Area</p>
+                                <p id="cdSubjectArea" class="text-base font-medium text-gray-900">—</p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">Program</p>
-                                <p class="text-base font-medium text-gray-900">Computer Science</p>
+                                <p class="text-sm text-gray-500">Catalog Number</p>
+                                <p id="cdCatalogNumber" class="text-base font-medium text-gray-900">—</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Term</p>
+                                <p id="cdTerm" class="text-base font-medium text-gray-900">—</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Weekly Schedule -->
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monday</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tuesday</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wednesday</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thursday</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Friday</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">09:00 - 10:00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Class: Math 101</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Class: Math 101</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:00 - 11:00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Class: CS 201</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Class: CS 201</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Class: CS 201</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">14:00 - 15:00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Lab Session</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Available</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Student Availability Calendar -->
+                    <div class="mb-2 flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-700">Student Availability</h3>
+                        <div class="flex items-center gap-2">
+                            <button type="button" id="saPrevWeekBtn" title="Previous week" aria-label="Previous week" class="px-3 py-1.5 rounded-lg border text-gray-700 hover:bg-gray-100">Prev</button>
+                            <span id="saCalendarRangeLabel" class="text-sm font-medium text-gray-600">Week</span>
+                            <button type="button" id="saNextWeekBtn" title="Next week" aria-label="Next week" class="px-3 py-1.5 rounded-lg border text-gray-700 hover:bg-gray-100">Next</button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div id="studentAvailabilityCalendar" class="space-y-2" aria-live="polite">
+                            <div class="text-sm text-gray-500">Loading availability…</div>
+                        </div>
+                        <div class="mt-3 text-xs text-gray-500">Darker green = more students available (08:00–20:00)</div>
                     </div>
                 </div>
 
@@ -206,6 +198,189 @@
             <a href="#" class="hover:text-indigo-400">Cookie Policy</a>
         </div>
     </footer>
+
+    <script>
+        // Student Availability - Weekly Calendar Renderer
+        (function() {
+            const hourStart = 8;  // 08:00
+            const hourEnd = 20;   // 20:00
+            const totalMinutes = (hourEnd - hourStart) * 60;
+            const pxPerMinute = 1; // 1px per minute => 12h = 720px
+            const calendarHeight = totalMinutes * pxPerMinute;
+
+            function startOfWeek(date) {
+                const d = new Date(date);
+                const day = (d.getDay() + 6) % 7; // Monday=0
+                d.setHours(0,0,0,0);
+                d.setDate(d.getDate() - day);
+                return d;
+            }
+            function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate() + n); return d; }
+            function sameDay(a, b) { return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+            function minutesFromStart(date) { return (date.getHours() - hourStart) * 60 + date.getMinutes(); }
+            function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+            // Placeholder availability data (counts are number of available students)
+            let availabilitySlots = [];
+
+            function generateSampleData(weekStart) {
+                const base = [];
+                // create a variety of slots over the week
+                const samples = [
+                    { day: 0, start: '10:00', end: '11:30', count: 12 },
+                    { day: 0, start: '14:00', end: '15:30', count: 28 },
+                    { day: 1, start: '09:30', end: '10:45', count: 6 },
+                    { day: 1, start: '16:00', end: '18:00', count: 22 },
+                    { day: 2, start: '11:15', end: '13:00', count: 18 },
+                    { day: 2, start: '15:00', end: '17:00', count: 35 },
+                    { day: 3, start: '08:30', end: '10:00', count: 9 },
+                    { day: 3, start: '12:30', end: '14:00', count: 26 },
+                    { day: 4, start: '13:00', end: '14:30', count: 16 },
+                    { day: 5, start: '17:00', end: '19:00', count: 14 }
+                ];
+                samples.forEach(s => {
+                    const d = addDays(weekStart, s.day);
+                    const [sh, sm] = s.start.split(':').map(Number);
+                    const [eh, em] = s.end.split(':').map(Number);
+                    const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), sh, sm, 0);
+                    const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), eh, em, 0);
+                    base.push({ start, end, count: s.count });
+                });
+                return base;
+            }
+
+            function colorForCount(count) {
+                if (count >= 30) return { box: 'bg-green-600 text-white', border: 'border-green-700' };
+                if (count >= 20) return { box: 'bg-green-500 text-white', border: 'border-green-600' };
+                if (count >= 12) return { box: 'bg-green-400 text-gray-900', border: 'border-green-500' };
+                if (count >= 6)  return { box: 'bg-green-300 text-gray-900', border: 'border-green-400' };
+                return { box: 'bg-green-200 text-gray-900', border: 'border-green-300' };
+            }
+
+            let currentWeekStart = startOfWeek(new Date());
+
+            function renderCalendar() {
+                const container = document.getElementById('studentAvailabilityCalendar');
+                if (!container) return;
+                container.innerHTML = '';
+
+                // Header with day names
+                const header = document.createElement('div');
+                header.className = 'grid grid-cols-8 text-xs font-medium text-gray-600 mb-2';
+                header.style.gridTemplateColumns = '96px repeat(7, minmax(0, 1fr))';
+                const timeTitle = document.createElement('div');
+                timeTitle.className = 'text-left';
+                timeTitle.textContent = 'Time';
+                header.appendChild(timeTitle);
+                for (let i = 0; i < 7; i++) {
+                    const d = addDays(currentWeekStart, i);
+                    const cell = document.createElement('div');
+                    cell.className = 'text-center';
+                    cell.textContent = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+                    header.appendChild(cell);
+                }
+                container.appendChild(header);
+
+                // Body grid
+                const body = document.createElement('div');
+                body.className = 'grid grid-cols-8 gap-2';
+                body.style.gridTemplateColumns = '96px repeat(7, minmax(0, 1fr))';
+
+                // Time scale
+                const timeCol = document.createElement('div');
+                timeCol.className = 'relative bg-white border rounded';
+                timeCol.style.height = calendarHeight + 'px';
+                for (let h = hourStart; h <= hourEnd; h++) {
+                    const top = (h - hourStart) * 60 * pxPerMinute;
+                    const line = document.createElement('div');
+                    line.className = 'absolute left-0 right-0 border-t border-gray-200';
+                    line.style.top = top + 'px';
+                    timeCol.appendChild(line);
+
+                    const label = document.createElement('div');
+                    label.className = 'absolute -translate-y-1/2 left-2 text-xs text-gray-600 bg-white/70 px-1';
+                    label.style.top = top + 'px';
+                    label.textContent = String(h).padStart(2, '0') + ':00';
+                    timeCol.appendChild(label);
+                }
+                body.appendChild(timeCol);
+
+                // Day columns
+                for (let i = 0; i < 7; i++) {
+                    const dayCol = document.createElement('div');
+                    dayCol.className = 'relative bg-white border rounded overflow-hidden';
+                    dayCol.style.height = calendarHeight + 'px';
+                    for (let h = hourStart; h <= hourEnd; h++) {
+                        const top = (h - hourStart) * 60 * pxPerMinute;
+                        const line = document.createElement('div');
+                        line.className = 'absolute left-0 right-0 border-t border-gray-200';
+                        line.style.top = top + 'px';
+                        dayCol.appendChild(line);
+                    }
+
+                    const dayDate = addDays(currentWeekStart, i);
+                    const todays = availabilitySlots.filter(r => sameDay(r.start, dayDate));
+                    todays.forEach(r => {
+                        let startMin = minutesFromStart(r.start);
+                        let endMin = minutesFromStart(r.end);
+                        startMin = clamp(startMin, 0, totalMinutes);
+                        endMin = clamp(endMin, 0, totalMinutes);
+                        const top = startMin * pxPerMinute;
+                        const height = Math.max(10, (endMin - startMin) * pxPerMinute);
+                        const { box, border } = colorForCount(r.count);
+                        const block = document.createElement('div');
+                        block.className = `absolute left-1 right-1 rounded-md ${box} border ${border} text-xs px-2 py-1 shadow`;
+                        block.style.top = top + 'px';
+                        block.style.height = height + 'px';
+                        block.textContent = `${r.count} students`;
+                        dayCol.appendChild(block);
+                    });
+
+                    body.appendChild(dayCol);
+                }
+
+                container.appendChild(body);
+
+                // Update week label
+                const rangeLabel = document.getElementById('saCalendarRangeLabel');
+                const endOfWeek = addDays(currentWeekStart, 6);
+                rangeLabel.textContent = `${currentWeekStart.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} - ${endOfWeek.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize with sample data
+                availabilitySlots = generateSampleData(currentWeekStart);
+                const prev = document.getElementById('saPrevWeekBtn');
+                const next = document.getElementById('saNextWeekBtn');
+                if (prev && next) {
+                    prev.addEventListener('click', () => { currentWeekStart = addDays(currentWeekStart, -7); availabilitySlots = generateSampleData(currentWeekStart); renderCalendar(); });
+                    next.addEventListener('click', () => { currentWeekStart = addDays(currentWeekStart, 7); availabilitySlots = generateSampleData(currentWeekStart); renderCalendar(); });
+                }
+
+                // Search button populates details and re-renders (simulated)
+                const btn = document.getElementById('classSearchBtn');
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        const cid = (document.getElementById('courseId').value || '003999').trim();
+                        const sa = (document.getElementById('subjectArea').value || 'MATH').trim();
+                        const cat = (document.getElementById('catalogNumber').value || '398').trim();
+                        const termSel = document.getElementById('term');
+                        const termVal = termSel && termSel.value ? termSel.options[termSel.selectedIndex].text : '2025 Fall';
+                        document.getElementById('cdCourseId').textContent = cid;
+                        document.getElementById('cdSubjectArea').textContent = sa;
+                        document.getElementById('cdCatalogNumber').textContent = cat;
+                        document.getElementById('cdTerm').textContent = termVal;
+
+                        // regenerate sample data to simulate new query
+                        availabilitySlots = generateSampleData(currentWeekStart);
+                        renderCalendar();
+                    });
+                }
+
+                renderCalendar();
+            });
+        })();
+    </script>
 
 </body>
 </html>

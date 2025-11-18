@@ -34,6 +34,38 @@
             background-color: rgba(0, 0, 0, 0.5);
             transition: opacity 0.3s ease;
         }
+        /* Multiselect dropdown styles */
+        .multiselect-dropdown {
+            position: relative;
+        }
+        .multiselect-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-top: none;
+            border-radius: 0 0 0.5rem 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .multiselect-dropdown.active .multiselect-options {
+            display: block;
+        }
+        .multiselect-option {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .multiselect-option:hover {
+            background-color: #f3f4f6;
+        }
     </style>
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -97,6 +129,12 @@
                         <a href="student-availability.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
                             <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             <span class="hidden sm:block">Student Availability</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="manage-facilities.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"></path></svg>
+                            <span class="hidden sm:block">Manage Facilities</span>
                         </a>
                     </li>
                     <li>
@@ -182,26 +220,16 @@
                                         </select>
                                     </div>
                                     
-                                    <!-- Floor -->
+                                    <!-- Capacity Range -->
                                     <div class="flex flex-col sm:flex-row items-start sm:items-center">
-                                        <label for="floor" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
-                                            Floor
+                                        <label class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                            Capacity Range
                                         </label>
-                                        <select id="floor" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
-                                            <option>All</option>
-                                            <option>Ground Floor</option>
-                                            <option>1st Floor</option>
-                                            <option>2nd Floor</option>
-                                            <option>3rd Floor</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <!-- Capacity -->
-                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
-                                        <label for="capacity" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
-                                            Minimum Capacity
-                                        </label>
-                                        <input type="number" id="capacity" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Enter minimum capacity" min="1">
+                                        <div class="w-full sm:w-2/3 flex items-center gap-3">
+                                            <input type="number" id="minCapacity" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Min" min="1">
+                                            <span class="text-gray-500">-</span>
+                                            <input type="number" id="maxCapacity" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Max" min="1">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -295,14 +323,6 @@
                                             </label>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Duration -->
-                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
-                                        <label for="duration" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
-                                            Duration (hours)
-                                        </label>
-                                        <input type="number" id="duration" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" placeholder="Auto-calculated" readonly>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -318,17 +338,40 @@
                                     
                                     <!-- Equipment -->
                                     <div class="flex flex-col sm:flex-row items-start sm:items-center">
-                                        <label for="equipment" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
+                                        <label class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">
                                             Equipment
                                         </label>
-                                        <select id="equipment" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150">
-                                            <option>No Preference</option>
-                                            <option>Projector</option>
-                                            <option>Whiteboard</option>
-                                            <option>Computer</option>
-                                            <option>Audio System</option>
-                                            <option>Video Conference</option>
-                                        </select>
+                                        <div class="multiselect-dropdown w-full sm:w-2/3">
+                                            <div id="equipmentDisplay" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple cursor-pointer transition duration-150">
+                                                Select equipment...
+                                            </div>
+                                            <div class="multiselect-options">
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Projector" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Projector</span>
+                                                </label>
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Whiteboard" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Whiteboard</span>
+                                                </label>
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Smart Board" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Smart Board</span>
+                                                </label>
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Computer" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Computer</span>
+                                                </label>
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Audio System" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Audio System</span>
+                                                </label>
+                                                <label class="multiselect-option">
+                                                    <input type="checkbox" value="Video Conference" class="equipment-checkbox w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple">
+                                                    <span class="text-sm text-gray-700">Video Conference</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- Accessibility -->
@@ -403,62 +446,104 @@
 
                     <!-- Results Grid View -->
                     <div id="gridView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Grid Card 1 -->
+                        <!-- Grid Card 1 - SNA A44 -->
                         <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
-                            <img src="https://placehold.co/400x250/4338ca/FFFFFF?text=Conference+Room+A" alt="Conference Room A" class="w-full h-48 object-cover">
+                            <img src="https://cdn.ku.edu.tr/Classroom/SNA/SNA+A44.3.jpg" alt="SNA A44" class="w-full h-48 object-cover">
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Conference Room A</h3>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">SNA A44</h3>
                                 <div class="space-y-1 text-sm text-gray-600">
-                                    <p><span class="font-medium">ID:</span> FAC-101</p>
-                                    <p><span class="font-medium">Type:</span> Meeting Room</p>
-                                    <p><span class="font-medium">Building:</span> Engineering</p>
-                                    <p><span class="font-medium">Floor:</span> 2nd Floor</p>
-                                    <p><span class="font-medium">Capacity:</span> 20 people</p>
+                                    <p><span class="font-medium">Type:</span> Classroom</p>
+                                    <p><span class="font-medium">Building:</span> SNA</p>
+                                    <p><span class="font-medium">Capacity:</span> 40 people</p>
                                     <p><span class="font-medium">Equipment:</span> Projector, Whiteboard</p>
                                 </div>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-sm font-semibold text-green-600">Available</span>
-                                    <a href="booking-details.html?id=FAC-101" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-details.html?id=SNA-A44" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Grid Card 2 -->
+                        <!-- Grid Card 2 - SOS 186 -->
                         <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
-                            <img src="https://placehold.co/400x250/059669/FFFFFF?text=Computer+Lab+3" alt="Computer Lab 3" class="w-full h-48 object-cover">
+                            <img src="https://cdn.ku.edu.tr/Classroom/SOS/SGKM_5.jpg" alt="SOS 186 (SGKM)" class="w-full h-48 object-cover">
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Computer Lab 3</h3>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">SOS 186 (SGKM)</h3>
                                 <div class="space-y-1 text-sm text-gray-600">
-                                    <p><span class="font-medium">ID:</span> FAC-205</p>
-                                    <p><span class="font-medium">Type:</span> Laboratory</p>
-                                    <p><span class="font-medium">Building:</span> Science Building</p>
-                                    <p><span class="font-medium">Floor:</span> 1st Floor</p>
-                                    <p><span class="font-medium">Capacity:</span> 30 people</p>
-                                    <p><span class="font-medium">Equipment:</span> Computers, Projector</p>
+                                    <p><span class="font-medium">Type:</span> Meeting Room</p>
+                                    <p><span class="font-medium">Building:</span> SOS</p>
+                                    <p><span class="font-medium">Capacity:</span> 25 people</p>
+                                    <p><span class="font-medium">Equipment:</span> Projector, Audio System</p>
                                 </div>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-sm font-semibold text-green-600">Available</span>
-                                    <a href="booking-details.html?id=FAC-205" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-details.html?id=SOS-186" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Grid Card 3 - without photo -->
-                        <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="false">
-                            <img src="https://placehold.co/400x250/6b7280/FFFFFF?text=No+Image" alt="Study Room B" class="w-full h-48 object-cover bg-gray-200">
+                        <!-- Grid Card 3 - ELC 115 -->
+                        <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
+                            <img src="https://cdn.ku.edu.tr/Classroom/ELC/ELC+115.1.jpg" alt="ELC 115" class="w-full h-48 object-cover">
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Study Room B</h3>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">ELC 115</h3>
                                 <div class="space-y-1 text-sm text-gray-600">
-                                    <p><span class="font-medium">ID:</span> FAC-310</p>
-                                    <p><span class="font-medium">Type:</span> Meeting Room</p>
-                                    <p><span class="font-medium">Building:</span> Library</p>
-                                    <p><span class="font-medium">Floor:</span> 3rd Floor</p>
-                                    <p><span class="font-medium">Capacity:</span> 8 people</p>
-                                    <p><span class="font-medium">Equipment:</span> Whiteboard</p>
+                                    <p><span class="font-medium">Type:</span> Classroom</p>
+                                    <p><span class="font-medium">Building:</span> ELC</p>
+                                    <p><span class="font-medium">Capacity:</span> 35 people</p>
+                                    <p><span class="font-medium">Equipment:</span> Projector, Smart Board</p>
                                 </div>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-sm font-semibold text-green-600">Available</span>
-                                    <a href="booking-details.html?id=FAC-310" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-details.html?id=ELC-115" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Card 4 - SNA A52 -->
+                        <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
+                            <img src="https://cdn.ku.edu.tr/Classroom/SNA/SNA+A52.3.jpg" alt="SNA A52" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">SNA A52</h3>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <p><span class="font-medium">Type:</span> Classroom</p>
+                                    <p><span class="font-medium">Building:</span> SNA</p>
+                                    <p><span class="font-medium">Capacity:</span> 52 people</p>
+                                    <p><span class="font-medium">Equipment:</span> Projector, Whiteboard</p>
+                                </div>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-details.html?id=SNA-A52" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Card 5 - Kurucular -->
+                        <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
+                            <img src="https://oyalido.com.tr/images/proje/KU/IMG_2888k.jpg" alt="Kurucular" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Kurucular</h3>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <p><span class="font-medium">Type:</span> Common Area</p>
+                                    <p><span class="font-medium">Building:</span> Main Campus</p>
+                                    <p><span class="font-medium">Capacity:</span> —</p>
+                                    <p><span class="font-medium">Equipment:</span> —</p>
+                                </div>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-details.html?id=KURUCULAR" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Card 6 - Şadırvan -->
+                        <div class="facility-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-150" data-has-photo="true">
+                            <img src="https://api3.talentrocket.de/files/lawSchool/gallery/6452/20190725_sadirvan_koc_university_talentrocket_web.jpg" alt="Şadırvan" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Şadırvan</h3>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <p><span class="font-medium">Type:</span> Common Area</p>
+                                    <p><span class="font-medium">Building:</span> Main Campus</p>
+                                    <p><span class="font-medium">Capacity:</span> —</p>
+                                    <p><span class="font-medium">Equipment:</span> —</p>
+                                </div>
+                                <div class="mt-4 flex justify-end items-center">
+                                    <a href="booking-sadirvan.html?id=SADIRVAN" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150">Reserve</a>
                                 </div>
                             </div>
                         </div>
@@ -470,14 +555,11 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facility ID</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facility Name</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Building</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Floor</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacity</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Equipment</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -485,50 +567,80 @@
                                 <!-- Sample Data Rows -->
                                 <tr class="facility-row" data-has-photo="true">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <img src="https://placehold.co/80x60/4338ca/FFFFFF?text=Room" alt="Conference Room A" class="w-20 h-14 object-cover rounded">
+                                        <img src="https://cdn.ku.edu.tr/Classroom/SNA/SNA+A44.3.jpg" alt="SNA A44" class="w-20 h-14 object-cover rounded">
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FAC-101</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Conference Room A</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting Room</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Engineering</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2nd Floor</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">SNA A44</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Classroom</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">40</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Projector, Whiteboard</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Available</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="booking-details.html?id=FAC-101" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                        <a href="booking-details.html?id=SNA-A44" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
                                     </td>
                                 </tr>
                                 <tr class="facility-row" data-has-photo="true">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <img src="https://placehold.co/80x60/059669/FFFFFF?text=Lab" alt="Computer Lab 3" class="w-20 h-14 object-cover rounded">
+                                        <img src="https://cdn.ku.edu.tr/Classroom/SOS/SGKM_5.jpg" alt="SOS 186 (SGKM)" class="w-20 h-14 object-cover rounded">
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FAC-205</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Computer Lab 3</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Laboratory</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Science Building</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1st Floor</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Computers, Projector</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Available</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">SOS 186 (SGKM)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting Room</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SOS</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Projector, Audio System</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="booking-details.html?id=FAC-205" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                        <a href="booking-details.html?id=SOS-186" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
                                     </td>
                                 </tr>
-                                <tr class="facility-row" data-has-photo="false">
+                                <tr class="facility-row" data-has-photo="true">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <img src="https://placehold.co/80x60/6b7280/FFFFFF?text=No+Image" alt="Study Room B" class="w-20 h-14 object-cover rounded bg-gray-200">
+                                        <img src="https://cdn.ku.edu.tr/Classroom/ELC/ELC+115.1.jpg" alt="ELC 115" class="w-20 h-14 object-cover rounded">
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FAC-310</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Study Room B</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting Room</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Library</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3rd Floor</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whiteboard</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Available</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ELC 115</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Classroom</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ELC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">35</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Projector, Smart Board</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="booking-details.html?id=FAC-310" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                        <a href="booking-details.html?id=ELC-115" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                    </td>
+                                </tr>
+                                <tr class="facility-row" data-has-photo="true">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img src="https://cdn.ku.edu.tr/Classroom/SNA/SNA+A52.3.jpg" alt="SNA A52" class="w-20 h-14 object-cover rounded">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">SNA A52</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Classroom</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">52</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Projector, Whiteboard</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="booking-details.html?id=SNA-A52" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                    </td>
+                                </tr>
+                                <tr class="facility-row" data-has-photo="true">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img src="https://oyalido.com.tr/images/proje/KU/IMG_2888k.jpg" alt="Kurucular" class="w-20 h-14 object-cover rounded">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Kurucular</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Common Area</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Campus</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="booking-details.html?id=KURUCULAR" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
+                                    </td>
+                                </tr>
+                                <tr class="facility-row" data-has-photo="true">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img src="https://api3.talentrocket.de/files/lawSchool/gallery/6452/20190725_sadirvan_koc_university_talentrocket_web.jpg" alt="Şadırvan" class="w-20 h-14 object-cover rounded">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Şadırvan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Common Area</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Campus</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="booking-sadirvan.html?id=SADIRVAN" class="text-indigo-600 hover:text-indigo-900">Reserve</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -538,18 +650,18 @@
                     <!-- Pagination -->
                     <div class="mt-4 flex justify-between items-center text-sm text-gray-600">
                         <div class="flex items-center space-x-2">
-                            <select class="border border-gray-300 rounded-lg p-1.5 text-xs bg-white">
+                            <select class="border border-gray-300 rounded-lg p-1.5 text-xs bg-white" title="Rows per page" aria-label="Rows per page">
                                 <option>10</option>
                                 <option>25</option>
                                 <option>50</option>
                             </select>
-                            <span>2 entries shown</span>
+                            <span>6 entries shown</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150" title="Previous" aria-label="Previous">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                             </button>
-                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150" title="Next" aria-label="Next">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                             </button>
                         </div>
@@ -582,12 +694,19 @@
                 const content = document.getElementById(targetId);
                 const icon = toggle.querySelector('svg');
                 
-                // Ensure content starts visible by default
-                content.classList.remove('hidden');
+                // Start with accordions open by default
+                content.style.display = 'block';
+                icon.classList.add('rotate-180');
 
                 toggle.addEventListener('click', function() {
-                    content.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
+                    // Toggle visibility
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        icon.classList.add('rotate-180');
+                    } else {
+                        content.style.display = 'none';
+                        icon.classList.remove('rotate-180');
+                    }
                 });
             });
 
@@ -602,32 +721,44 @@
                 minDate: "today"
             });
 
-            // --- 3. Calculate Duration ---
-            const startTimeInput = document.getElementById('startTime');
-            const endTimeInput = document.getElementById('endTime');
-            const durationInput = document.getElementById('duration');
+            // --- 3. MULTISELECT EQUIPMENT DROPDOWN ---
+            const equipmentDropdown = document.querySelector('.multiselect-dropdown');
+            const equipmentDisplay = document.getElementById('equipmentDisplay');
+            const equipmentCheckboxes = document.querySelectorAll('.equipment-checkbox');
 
-            function calculateDuration() {
-                const startTime = startTimeInput.value;
-                const endTime = endTimeInput.value;
+            // Toggle dropdown
+            equipmentDisplay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                equipmentDropdown.classList.toggle('active');
+            });
 
-                if (startTime && endTime) {
-                    const start = new Date(`1970-01-01T${startTime}:00`);
-                    const end = new Date(`1970-01-01T${endTime}:00`);
-                    const diff = (end - start) / 1000 / 60 / 60; // Convert to hours
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!equipmentDropdown.contains(e.target)) {
+                    equipmentDropdown.classList.remove('active');
+                }
+            });
 
-                    if (diff > 0) {
-                        durationInput.value = diff.toFixed(1);
-                    } else {
-                        durationInput.value = '';
-                    }
+            // Update display when checkboxes change
+            function updateEquipmentDisplay() {
+                const selected = Array.from(equipmentCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                
+                if (selected.length === 0) {
+                    equipmentDisplay.textContent = 'Select equipment...';
+                    equipmentDisplay.classList.add('text-gray-500');
+                } else {
+                    equipmentDisplay.textContent = selected.join(', ');
+                    equipmentDisplay.classList.remove('text-gray-500');
                 }
             }
 
-            startTimeInput.addEventListener('change', calculateDuration);
-            endTimeInput.addEventListener('change', calculateDuration);
+            equipmentCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateEquipmentDisplay);
+            });
 
-            // --- 4. VIEW TOGGLE (Grid/Table) ---
+            // --- 5. VIEW TOGGLE (Grid/Table) ---
             const gridViewBtn = document.getElementById('gridViewBtn');
             const tableViewBtn = document.getElementById('tableViewBtn');
             const gridView = document.getElementById('gridView');
@@ -651,7 +782,7 @@
                 gridViewBtn.classList.add('bg-gray-200', 'text-gray-700');
             });
 
-            // --- 5. SHOW ONLY WITH PHOTOS FILTER ---
+            // --- 6. SHOW ONLY WITH PHOTOS FILTER ---
             const showOnlyWithPhotos = document.getElementById('showOnlyWithPhotos');
             
             showOnlyWithPhotos.addEventListener('change', function() {
@@ -681,7 +812,7 @@
                 }
             });
 
-            // --- 6. SEARCH BUTTON - Collect all filter data ---
+            // --- 7. SEARCH BUTTON - Collect all filter data ---
             const searchButton = document.querySelector('button[class*="Search Available Facilities"]');
             if (searchButton) {
                 searchButton.addEventListener('click', function() {
@@ -690,13 +821,14 @@
                         campus: document.getElementById('campus').value,
                         building: document.getElementById('building').value,
                         roomType: document.getElementById('roomType').value,
-                        floor: document.getElementById('floor').value,
-                        capacity: document.getElementById('capacity').value,
+                        minCapacity: document.getElementById('minCapacity').value,
+                        maxCapacity: document.getElementById('maxCapacity').value,
                         startDate: document.getElementById('startDate').value,
                         endDate: document.getElementById('endDate').value,
                         startTime: document.getElementById('startTime').value,
                         endTime: document.getElementById('endTime').value,
-                        daysOfWeek: []
+                        daysOfWeek: [],
+                        equipment: []
                     };
                     
                     // Collect selected days of week
@@ -708,9 +840,16 @@
                         }
                     });
                     
+                    // Collect selected equipment
+                    equipmentCheckboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            searchParams.equipment.push(checkbox.value);
+                        }
+                    });
+
                     // Log the search params (in production, this would be sent to the server)
                     console.log('Search Parameters:', searchParams);
-                    
+
                     // You could send this to an API endpoint here
                     // Example: fetch('/api/search-facilities', { method: 'POST', body: JSON.stringify(searchParams) })
                 });

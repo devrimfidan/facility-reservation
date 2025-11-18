@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KU Campus - Facility Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    body { font-family: 'Inter', sans-serif; background:#f8fafc; }
+    .text-ku-purple { color:#4338ca; }
+    .bg-ku-purple-new { background:#824aef; }
+    .hover\:bg-ku-purple-new-hover:hover { background:#713de6; }
+    .tab-active { border-bottom-width:2px; border-color:#824aef; color:#824aef; }
+  </style>
+</head>
+<body class="antialiased flex flex-col">
+  <!-- Header -->
+  <header class="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm sticky top-0 z-30 flex-shrink-0">
+    <div class="flex items-center">
+      <svg class="w-6 h-6 mr-3 text-ku-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      <span class="text-xl font-bold text-ku-purple tracking-wide">KU Campus</span>
+    </div>
+    <div class="flex items-center space-x-3">
+      <button class="text-gray-500 hover:text-ku-purple" aria-label="Notifications" title="Notifications">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-2.81A3 3 0 0018 10V8a6 6 0 10-12 0v2c0 1.5.54 2.92 1.405 4.19L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9"/></svg>
+      </button>
+      <div class="flex items-center space-x-2 cursor-pointer">
+        <span class="text-sm font-medium text-gray-700 hidden sm:block">Alparslan O.</span>
+        <img class="h-8 w-8 rounded-full object-cover" src="https://placehold.co/32x32/14b8a6/FFFFFF?text=AO" alt="User Avatar" />
+        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-16 sm:w-64 bg-slate-800 flex-shrink-0 overflow-y-auto">
+      <div class="p-4 text-white">
+        <p class="hidden sm:block text-xs font-medium uppercase tracking-wider mb-4 text-indigo-400">Navigation Menu</p>
+        <ul class="space-y-3 text-sm">
+          <li><a href="index.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition"><svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span class="hidden sm:block">Home</span></a></li>
+          <li><a href="search-reserve.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition"><svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span class="hidden sm:block">Search & Reserve</span></a></li>
+          <li><a href="manage-facilities.html" class="flex items-center p-2 rounded-lg bg-slate-700 text-white transition"><svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/></svg><span class="hidden sm:block">Manage Facilities</span></a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 overflow-y-auto flex flex-col">
+      <main class="flex-grow p-6 pb-24">
+        <nav class="text-xs sm:text-sm text-gray-500 mb-4">
+          <a href="index.html" class="text-gray-400 hover:text-ku-purple">Home</a> /
+          <span class="text-gray-400">Campus Services</span> /
+          <span class="text-gray-400">Facility Management</span> /
+          <a href="manage-facilities.html" class="text-gray-400 hover:text-ku-purple">Facilities</a> /
+          <span class="font-semibold text-ku-purple">Detail</span>
+        </nav>
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Facility</h1>
+
+        <!-- Header strip with code + facility code -->
+        <div class="bg-white rounded-xl shadow p-6 mb-6 flex flex-wrap gap-8 items-center">
+          <div>
+            <p class="text-sm text-gray-500">Code</p>
+            <p id="fdCode" class="text-base font-medium text-gray-900">—</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Facility Code</p>
+            <p id="fdFacilityCode" class="text-base font-medium text-gray-900">—</p>
+          </div>
+          <div class="ml-auto flex items-center gap-2">
+            <button class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-sm font-semibold px-4 py-2 rounded-lg" title="Add New">Add New</button>
+            <select class="border border-gray-300 rounded-lg text-sm p-2 bg-white focus:ring-ku-purple focus:border-ku-purple" title="Display Mode">
+              <option>Update/Display</option>
+              <option>Read Only</option>
+            </select>
+            <div class="flex items-center text-xs ml-2">
+              <span class="mr-2">Data Language:</span>
+              <button class="px-2 py-1 rounded bg-gray-900 text-white">EN</button>
+              <button class="px-2 py-1 rounded">TR</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white rounded-xl shadow p-6">
+          <div class="border-b mb-6 flex flex-wrap items-center justify-between">
+            <div class="flex gap-8 text-sm font-medium" role="tablist">
+              <button data-tab="information" class="py-3 -mb-px tab-active" role="tab" aria-selected="true">Information</button>
+              <button data-tab="additional" class="py-3 -mb-px" role="tab" aria-selected="false">Additional Info</button>
+              <button data-tab="classroom" class="py-3 -mb-px" role="tab" aria-selected="false">Classroom Booking</button>
+              <button data-tab="properties" class="py-3 -mb-px" role="tab" aria-selected="false">Facility Properties</button>
+              <button data-tab="dorm" id="dormTab" class="py-3 -mb-px hidden" role="tab" aria-selected="false">Dorm Information</button>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <button class="px-2 py-1 rounded border" title="Prev" aria-label="Previous">&lt;</button>
+              <button class="px-2 py-1 rounded border" title="Next" aria-label="Next">&gt;</button>
+              <span class="ml-2">Page <span>1</span></span>
+            </div>
+          </div>
+
+          <!-- Information Tab -->
+          <div id="tab-information" class="space-y-6" role="tabpanel">
+            <!-- Section 1: Effective/Status, Description/Short Description -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex items-center gap-4">
+                <label class="w-48 text-xs font-medium text-gray-600">Effective Date</label>
+                <input type="date" aria-label="Effective Date" title="Effective Date" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" />
+              </div>
+              <div class="flex items-center gap-4">
+                <label class="w-48 text-xs font-medium text-gray-600">Status</label>
+                <select aria-label="Facility Status" title="Facility Status" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Active</option></select>
+              </div>
+              <div class="flex items-center gap-4">
+                <label class="w-48 text-xs font-medium text-gray-600">Description</label>
+                <input type="text" value="SINF (36)" placeholder="Display Name" aria-label="Display Name" title="Display Name" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" />
+              </div>
+              <div class="flex items-center gap-4">
+                <label class="w-48 text-xs font-medium text-gray-600">Short Description</label>
+                <input placeholder="Academic Collaborative Space" aria-label="Description" title="Description" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" />
+              </div>
+            </div>
+            <div class="border-t border-gray-200"></div>
+
+            <!-- Section 2: Location & dimensions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Campus</label><select aria-label="Campus" title="Campus" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>MAIN - FENER</option></select></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Area (m²)</label><input value="62.30" placeholder="Square Meters" aria-label="Square Meters" title="Square Meters" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Building</label><select aria-label="Org Unit" title="Org Unit" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>CASE - Admins Sci & Econ</option></select></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Ceiling Height (m)</label><input value="3.00" placeholder="Meter Height" aria-label="Meter Height" title="Meter Height" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Floor</label><select aria-label="Floor" title="Floor" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Z - Ground Floor</option></select></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Total Windows Area (m²)</label><input value="0.00" placeholder="Tuition Surcharge" aria-label="Tuition Surcharge" title="Tuition Surcharge" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Room</label><input value="Z26" placeholder="Building Label" aria-label="Building Label" title="Building Label" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Facility Type</label><select id="facilityTypeField" aria-label="Facility Type" title="Facility Type" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Classroom</option><option>Dorm</option></select></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Door No</label><input value="Z26" placeholder="Room Code" aria-label="Room Code" title="Room Code" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Facility Sub Type</label><select aria-label="Category" title="Category" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Classroom</option><option>Lecture Room</option></select></div>
+            </div>
+            <div class="border-t border-gray-200"></div>
+
+            <!-- Section 3: Bookable/Ownership, Visuals/Note -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Is Bookable</label><button id="bookableToggle" type="button" aria-label="Toggle Bookable" title="Toggle Bookable" class="relative inline-flex h-5 w-10 items-center rounded-full bg-gray-300"><span class="inline-block h-4 w-4 bg-white rounded-full translate-x-0 transition"></span></button></div>
+              <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Ownership</label><select aria-label="Property Code" title="Property Code" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Select</option></select></div>
+              <div class="flex items-start gap-4 md:col-span-1"><label class="w-48 text-xs font-medium text-gray-600 pt-1">Note</label><textarea rows="3" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Additional notes..."></textarea></div>
+              <div class="flex items-start gap-4 md:col-span-1"><label class="w-48 text-xs font-medium text-gray-600 pt-1">Facility Visuals</label><div class="flex-1 border-2 border-dashed border-purple-300 rounded-lg p-6 text-center text-sm text-gray-500">Drag & Drop or Browse<br/><span class="text-xs">Max File Size: 4MB (png,jpg)</span></div></div>
+
+            </div>
+            <div class="pt-6 flex justify-end gap-3">
+              <a href="manage-facilities.html" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold px-6 py-2 rounded-lg">Return to Search</a>
+              <button class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-sm font-semibold px-6 py-2 rounded-lg">Save</button>
+            </div>
+          </div>
+
+          <!-- Classroom Booking Tab -->
+          <div id="tab-classroom" class="hidden" role="tabpanel">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Reservation Calendar</h3>
+            <div class="flex items-center gap-2 mb-4">
+              <button id="cbPrevWeek" class="px-3 py-1.5 rounded-lg border text-gray-700 hover:bg-gray-100" aria-label="Previous week">Prev</button>
+              <span id="cbRange" class="text-sm font-medium text-gray-600">Week</span>
+              <button id="cbNextWeek" class="px-3 py-1.5 rounded-lg border text-gray-700 hover:bg-gray-100" aria-label="Next week">Next</button>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div id="cbCalendar" class="space-y-2" aria-live="polite"><div class="text-sm text-gray-500">Loading…</div></div>
+              <div class="mt-3 text-xs text-gray-500">Purple = Reserved, empty = Available (08:00–20:00)</div>
+            </div>
+          </div>
+
+          <!-- Facility Properties Tab -->
+            <div id="tab-properties" class="hidden" role="tabpanel">
+              <h3 class="text-lg font-semibold text-gray-700 mb-4">Facility Properties</h3>
+              <form id="propertiesForm" class="bg-gray-50 p-6 rounded-lg space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-4">
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propWhiteBoard">White Boards</label><input id="propWhiteBoard" type="number" min="0" value="0" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propProjector">Projectors</label><input id="propProjector" type="number" min="0" value="0" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propConnection">Connection Options</label>
+                      <select id="propConnection" aria-label="Connection Options" title="Connection Options" multiple class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                        <option value="VGA">VGA</option>
+                        <option value="HDMI">HDMI</option>
+                        <option value="Mini Display Port">Mini Display Port</option>
+                        <option value="Wireless Display Port">Wireless Display Port</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="space-y-4">
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propDocumentCamera">Document Camera</label><select id="propDocumentCamera" aria-label="Document Camera" title="Document Camera" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propSocketStudents">Socket For Students</label><select id="propSocketStudents" aria-label="Socket For Students" title="Socket For Students" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propWindow">Window</label><select id="propWindow" aria-label="Window" title="Window" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propClassRecording">Class Recording System</label><select id="propClassRecording" aria-label="Class Recording System" title="Class Recording System" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propCamera">Camera</label><select id="propCamera" aria-label="Camera" title="Camera" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                    <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600" for="propDigitalPen">Digital Pen</label><select id="propDigitalPen" aria-label="Digital Pen" title="Digital Pen" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>No</option><option>Yes</option></select></div>
+                  </div>
+                </div>
+                <div class="pt-2 flex justify-end">
+                  <button id="propertiesSaveBtn" type="button" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-sm font-semibold px-6 py-2 rounded-lg">Save Properties</button>
+                </div>
+                <div id="propertiesBanner" class="hidden mt-4 text-sm rounded-lg p-3"></div>
+              </form>
+            </div>
+
+          <!-- Dorm Information Tab -->
+          <div id="tab-dorm" class="hidden" role="tabpanel">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Dorm Information</h3>
+            <div class="bg-gray-50 p-6 rounded-lg text-sm text-gray-600">Dorm-specific fields will appear here (capacity, gender, amenities, etc.).</div>
+          </div>
+
+          <!-- Additional Info Tab -->
+          <div id="tab-additional" class="hidden" role="tabpanel">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Additional Information</h3>
+            <form id="additionalInfoForm" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Status</label><select aria-label="Status" title="Status" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Active</option><option>Inactive</option></select></div>
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Capacity</label><input type="number" min="0" value="36" placeholder="Capacity" aria-label="Capacity" title="Capacity" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Room Type</label><select aria-label="Room Type" title="Room Type" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Lecture Room</option><option>ELC Classroom</option></select></div>
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Effective Date</label><input type="date" aria-label="Effective Date" title="Effective Date" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">Disabled Access Information</label><select aria-label="Disabled Access Information" title="Disabled Access Information" class="flex-1 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple"><option>Select</option><option>Elevator Nearby</option><option>Ramp Access</option></select></div>
+                  <div class="flex items-center gap-4"><label class="w-48 text-xs font-medium text-gray-600">YÖK Capacity</label><input type="number" min="0" value="0" placeholder="YÖK Capacity" aria-label="YÖK Capacity" title="YÖK Capacity" class="flex-1 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" /></div>
+                  <div class="flex items-start gap-4"><label class="w-48 text-xs font-medium text-gray-600 pt-1">Facility Visuals</label><div class="flex-1 border-2 border-dashed border-purple-300 rounded-lg p-6 text-center text-sm text-gray-500">Drag & Drop or Browse<br/><span class="text-xs">Max File Size: 4MB (png,jpg)</span></div></div>
+                </div>
+              </div>
+              <!-- Facility Users section -->
+              <div class="border-t pt-6">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-sm font-semibold text-gray-700">Facility Users</h4>
+                  <button id="facilityUsersAddBtn" type="button" class="inline-flex items-center bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-xs font-semibold px-3 py-1.5 rounded-lg" title="Add Facility User">Add New</button>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full text-xs border border-gray-200 rounded-lg" id="facilityUsersTable">
+                    <thead class="bg-gray-50 text-gray-600">
+                      <tr>
+                        <th class="px-3 py-2 text-left">Person No</th>
+                        <th class="px-3 py-2 text-left">Full Name</th>
+                        <th class="px-3 py-2 text-left">Role</th>
+                        <th class="px-3 py-2 text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-100">
+                      <tr class="text-gray-500" id="facilityUsersEmpty">
+                        <td class="px-3 py-2" colspan="4">No data available in table</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="flex justify-end gap-3 pt-4">
+                <button type="button" id="additionalInfoSaveBtn" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-sm font-semibold px-6 py-2 rounded-lg">Save Additional Info</button>
+              </div>
+              <div id="additionalInfoBanner" class="hidden text-sm mt-4 rounded-lg p-3"></div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full bg-slate-800 text-white text-xs p-3 flex justify-end items-center z-40 sticky bottom-0 flex-shrink-0">
+    <div class="flex items-center space-x-4">
+      <span>Copyright © 2025 Koç University Version 9.1.12</span>
+      <a href="#" class="hover:text-indigo-400">Privacy Policy</a>
+      <a href="#" class="hover:text-indigo-400">Cookie Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    // Parse facility code from query string
+    const params = new URLSearchParams(location.search);
+    const code = params.get('code') || 'CASEZ26';
+    document.getElementById('fdCode').textContent = code;
+    document.getElementById('fdFacilityCode').textContent = 'MAIN-' + code.replace(/([A-Z]+)(\d+)/,'$1-$2');
+
+    // Tabs logic
+    const tabs = document.querySelectorAll('[data-tab]');
+    function activate(tabName){
+      tabs.forEach(btn=>{const active = btn.getAttribute('data-tab')===tabName;btn.classList.toggle('tab-active',active);btn.setAttribute('aria-selected',active);});
+      ['information','additional','classroom','properties','dorm'].forEach(n=>{const el=document.getElementById('tab-'+n);if(el)el.classList.toggle('hidden',n!==tabName);});
+    }
+    tabs.forEach(btn=>btn.addEventListener('click',()=>activate(btn.getAttribute('data-tab'))));
+
+    // Bookable toggle
+    const bt = document.getElementById('bookableToggle');
+    bt.addEventListener('click',()=>{const on = bt.classList.toggle('bg-ku-purple-new');bt.querySelector('span').style.transform = on?'translateX(20px)':'translateX(0)';});
+
+    // Dorm tab visibility
+    const facilityTypeField = document.getElementById('facilityTypeField');
+    const dormTab = document.getElementById('dormTab');
+    function updateDormVisibility(){
+      const isDorm = facilityTypeField.value.toLowerCase()==='dorm';
+      dormTab.classList.toggle('hidden', !isDorm);
+      if(!isDorm && dormTab.classList.contains('tab-active')) activate('information');
+    }
+    facilityTypeField.addEventListener('change', updateDormVisibility);
+    updateDormVisibility();
+
+    // Classroom Booking Calendar (reuse simplified logic)
+    (function(){
+      const hourStart=8,hourEnd=20,totalMinutes=(hourEnd-hourStart)*60,pxPerMinute=1,height=totalMinutes*pxPerMinute;
+      let currentWeekStart=startOfWeek(new Date());
+      const reservations=[
+        {start:'2025-11-17T10:00:00',end:'2025-11-17T12:00:00'},
+        {start:'2025-11-18T09:30:00',end:'2025-11-18T11:00:00'},
+        {start:'2025-11-19T13:00:00',end:'2025-11-19T15:00:00'},
+        {start:'2025-11-21T16:30:00',end:'2025-11-21T18:00:00'}
+      ];
+      function startOfWeek(d){d=new Date(d);const day=(d.getDay()+6)%7;d.setHours(0,0,0,0);d.setDate(d.getDate()-day);return d;}
+      function addDays(d,n){d=new Date(d);d.setDate(d.getDate()+n);return d;}
+      function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+      function minutesFromStart(d){return (d.getHours()-hourStart)*60+d.getMinutes();}
+      function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+      function render(){const c=document.getElementById('cbCalendar');if(!c)return;c.innerHTML='';
+        const header=document.createElement('div');header.className='grid grid-cols-8 text-xs font-medium text-gray-600 mb-2';header.style.gridTemplateColumns='96px repeat(7, minmax(0,1fr))';const t=document.createElement('div');t.textContent='Time';header.appendChild(t);
+        for(let i=0;i<7;i++){const d=addDays(currentWeekStart,i);const cell=document.createElement('div');cell.className='text-center';cell.textContent=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});header.appendChild(cell);}c.appendChild(header);
+        const body=document.createElement('div');body.className='grid grid-cols-8 gap-2';body.style.gridTemplateColumns='96px repeat(7, minmax(0,1fr))';
+        const timeCol=document.createElement('div');timeCol.className='relative bg-white border rounded';timeCol.style.height=height+'px';
+        for(let h=hourStart;h<=hourEnd;h++){const top=(h-hourStart)*60*pxPerMinute;const line=document.createElement('div');line.className='absolute left-0 right-0 border-t border-gray-200';line.style.top=top+'px';timeCol.appendChild(line);const label=document.createElement('div');label.className='absolute -translate-y-1/2 left-2 text-xs text-gray-600 bg-white/70 px-1';label.style.top=top+'px';label.textContent=String(h).padStart(2,'0')+':00';timeCol.appendChild(label);}body.appendChild(timeCol);
+        for(let i=0;i<7;i++){const dayCol=document.createElement('div');dayCol.className='relative bg-white border rounded overflow-hidden';dayCol.style.height=height+'px';for(let h=hourStart;h<=hourEnd;h++){const top=(h-hourStart)*60*pxPerMinute;const line=document.createElement('div');line.className='absolute left-0 right-0 border-t border-gray-200';line.style.top=top+'px';dayCol.appendChild(line);}const dayDate=addDays(currentWeekStart,i);const todays=reservations.filter(r=>sameDay(new Date(r.start),dayDate));todays.forEach(r=>{const rs=new Date(r.start),re=new Date(r.end);let sm=minutesFromStart(rs),em=minutesFromStart(re);sm=clamp(sm,0,totalMinutes);em=clamp(em,0,totalMinutes);const top=sm*pxPerMinute,heightBlock=Math.max(6,(em-sm)*pxPerMinute);const block=document.createElement('div');block.className='absolute left-1 right-1 rounded-md bg-ku-purple-new hover:bg-ku-purple-new-hover text-white text-xs px-2 py-1 shadow';block.style.top=top+'px';block.style.height=heightBlock+'px';block.textContent=`${rs.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} - ${re.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;dayCol.appendChild(block);});body.appendChild(dayCol);}c.appendChild(body);
+        document.getElementById('cbRange').textContent=`${currentWeekStart.toLocaleDateString(undefined,{month:'short',day:'numeric'})} - ${addDays(currentWeekStart,6).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}`;}
+      document.getElementById('cbPrevWeek').addEventListener('click',()=>{currentWeekStart=addDays(currentWeekStart,-7);render();});
+      document.getElementById('cbNextWeek').addEventListener('click',()=>{currentWeekStart=addDays(currentWeekStart,7);render();});
+      render();
+    })();
+
+    // Facility Properties Save Handler
+    const propertiesSaveBtn = document.getElementById('propertiesSaveBtn');
+    if (propertiesSaveBtn) {
+      propertiesSaveBtn.addEventListener('click', () => {
+        const data = {
+          whiteBoards: Number(document.getElementById('propWhiteBoard').value || 0),
+          projectors: Number(document.getElementById('propProjector').value || 0),
+          connection: Array.from(document.getElementById('propConnection').selectedOptions).map(o=>o.value),
+          documentCamera: document.getElementById('propDocumentCamera').value === 'Yes',
+          socketForStudents: document.getElementById('propSocketStudents').value === 'Yes',
+          window: document.getElementById('propWindow').value === 'Yes',
+          classRecording: document.getElementById('propClassRecording').value === 'Yes',
+          camera: document.getElementById('propCamera').value === 'Yes',
+          digitalPen: document.getElementById('propDigitalPen').value === 'Yes'
+        };
+        const banner = document.getElementById('propertiesBanner');
+        if (banner) {
+          banner.className = 'mt-4 text-sm rounded-lg p-3 bg-green-50 border border-green-200 text-green-700';
+          banner.textContent = 'Properties saved (mock): ' + JSON.stringify(data);
+          banner.classList.remove('hidden');
+          setTimeout(()=>banner.classList.add('hidden'),3000);
+        }
+      });
+    }
+
+    // Additional Info Save + Facility Users logic
+    const additionalSaveBtn = document.getElementById('additionalInfoSaveBtn');
+    const additionalBanner = document.getElementById('additionalInfoBanner');
+    if (additionalSaveBtn) {
+      additionalSaveBtn.addEventListener('click', () => {
+        if (additionalBanner) {
+          additionalBanner.className = 'mt-4 text-sm rounded-lg p-3 bg-green-50 border border-green-200 text-green-700';
+          additionalBanner.textContent = 'Additional Info saved (mock).';
+          additionalBanner.classList.remove('hidden');
+          setTimeout(()=>additionalBanner.classList.add('hidden'),3000);
+        }
+      });
+    }
+
+    const facilityUsersAddBtn = document.getElementById('facilityUsersAddBtn');
+    if (facilityUsersAddBtn) {
+      facilityUsersAddBtn.addEventListener('click', () => {
+        const tbody = document.querySelector('#facilityUsersTable tbody');
+        const emptyRow = document.getElementById('facilityUsersEmpty');
+        if (emptyRow) emptyRow.remove();
+        const tr = document.createElement('tr');
+        tr.className = 'text-gray-700';
+        tr.innerHTML = `
+          <td class="px-3 py-2">P${Math.floor(1000+Math.random()*9000)}</td>
+          <td class="px-3 py-2">John Doe</td>
+          <td class="px-3 py-2">Instructor</td>
+          <td class="px-3 py-2">
+            <button type="button" class="text-xs text-red-600 hover:underline" aria-label="Remove">Remove</button>
+          </td>`;
+        tbody.appendChild(tr);
+        tr.querySelector('button').addEventListener('click', () => {
+          tr.remove();
+          if (!tbody.children.length) {
+            const er = document.createElement('tr');
+            er.id = 'facilityUsersEmpty';
+            er.className = 'text-gray-500';
+            er.innerHTML = '<td class="px-3 py-2" colspan="4">No data available in table</td>';
+            tbody.appendChild(er);
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>

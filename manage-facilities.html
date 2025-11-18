@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KU Campus - Manage Facilities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .text-ku-purple { color: #4338ca; }
+        .focus\:ring-ku-purple:focus { --tw-ring-color: #4338ca; }
+        .focus\:border-ku-purple:focus { --tw-border-color: #4338ca; }
+        .hover\:text-ku-purple:hover { color: #4338ca; }
+        .bg-ku-purple-light { background-color: #ede9fe; }
+        .bg-ku-purple-new { background-color: #824aef; }
+        .hover\:bg-ku-purple-new-hover:hover { background-color: #713de6; }
+    </style>
+</head>
+
+<body class="antialiased flex flex-col">
+    <!-- Header -->
+    <header class="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm sticky top-0 z-30 flex-shrink-0">
+        <div class="flex items-center">
+            <svg class="w-6 h-6 mr-3 text-ku-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            <span class="text-xl font-bold text-ku-purple tracking-wide">KU Campus</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="text-gray-500 hover:text-ku-purple" title="Notifications" aria-label="Notifications">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-2.81A3 3 0 0018 10V8a6 6 0 10-12 0v2c0 1.5.54 2.92 1.405 4.19L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9"></path></svg>
+            </button>
+            <div class="flex items-center space-x-2 cursor-pointer">
+                <span class="text-sm font-medium text-gray-700 hidden sm:block">Alparslan O.</span>
+                <img class="h-8 w-8 rounded-full object-cover" src="https://placehold.co/32x32/14b8a6/FFFFFF?text=AO" alt="User Avatar" />
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-16 sm:w-64 bg-slate-800 flex-shrink-0 overflow-y-auto">
+            <div class="p-4 text-white">
+                <p class="hidden sm:block text-xs font-medium uppercase tracking-wider mb-4 text-indigo-400">Navigation Menu</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="group">
+                        <a href="index.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            <span class="hidden sm:block">Home</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="search-reserve.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span class="hidden sm:block">Search & Reserve</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="my-reservations.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span class="hidden sm:block">My Reservations</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="manage-reservations.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            <span class="hidden sm:block">Manage Reservations</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="student-availability.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span class="hidden sm:block">Student Availability</span>
+                        </a>
+                    </li>
+                    <li class="group">
+                        <a href="manage-facilities.html" class="flex items-center p-2 rounded-lg bg-slate-700 text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"></path></svg>
+                            <span class="hidden sm:block">Manage Facilities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="powerbi-reports.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a1 1 0 0 0-1 1v16a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1Zm5 4a1 1 0 0 0-1 1v12a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm5 3a1 1 0 0 0-1 1v9a1 1 0 0 0 2 0v-9a1 1 0 0 0-1-1Zm5-4a1 1 0 0 0-1 1v13a1 1 0 0 0 2 0V7a1 1 0 0 0-1-1Z"/></svg>
+                            <span class="hidden sm:block">Power BI Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto flex flex-col">
+            <main class="flex-grow p-6 pb-20">
+                <div class="mb-6">
+                    <nav class="text-xs sm:text-sm text-gray-500 mb-4">
+                        <span class="text-gray-400">Home / Campus Services / Facility Management /</span>
+                        <span class="font-semibold text-ku-purple">Facilities</span>
+                    </nav>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Facilities</h1>
+                            <p class="text-gray-500">Search, manage and export facilities.</p>
+                        </div>
+                        <button id="addFacilityBtn" class="inline-flex items-center bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow" title="Add New Facility">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            Add New
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Facility Search -->
+                <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-base font-semibold text-gray-800 mb-4">Facility Search</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Code</label>
+                                <input type="text" id="f_code" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Code Search" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Campus</label>
+                                <select id="f_campus" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option value="">Select</option>
+                                    <option>MAIN</option>
+                                    <option>WEST</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Building</label>
+                                <select id="f_building" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option value="">Select</option>
+                                    <option>SOS</option>
+                                    <option>ELC</option>
+                                    <option>CASE</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Door No</label>
+                                <input type="text" id="f_door" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Door No Search" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facility Users</label>
+                                <div class="relative">
+                                    <input type="text" id="f_users" class="w-full border border-gray-300 rounded-lg p-2.5 pr-10 focus:ring-ku-purple focus:border-ku-purple" placeholder="Facility Users Search" />
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" title="Search users" aria-hidden="true">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Is Bookable</label>
+                                <select id="f_bookable" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option value="">—</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facility Code</label>
+                                <input type="text" id="f_facility_code" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Facility Code Search" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facility Type</label>
+                                <select id="f_facility_type" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option>Classroom</option>
+                                    <option>Meeting Room</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facility Sub Type</label>
+                                <select id="f_facility_sub_type" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option>Classroom</option>
+                                    <option>Lecture Room</option>
+                                    <option>ELC Classroom</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Room Type</label>
+                                <select id="f_room_type" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                    <option>Lecture Room</option>
+                                    <option>ELC Classroom</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="number" id="f_cap_min" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Min" />
+                                    <input type="number" id="f_cap_max" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Max" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <input type="text" id="f_desc" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" placeholder="Description Search" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button id="facilitySearchBtn" class="bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-8 rounded-xl shadow-md transition duration-150">Search</button>
+                    </div>
+                </section>
+
+                <!-- Facility List -->
+                <section class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-gray-800">Facility List</h2>
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <input id="listSearch" type="text" class="w-64 border border-gray-300 rounded-lg p-2.5 pl-9 focus:ring-ku-purple focus:border-ku-purple" placeholder="Find" />
+                                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                            <div class="relative">
+                                <button id="downloadBtn" class="flex items-center border border-gray-300 text-gray-700 hover:bg-gray-100 font-semibold py-2 px-3 rounded-lg" aria-haspopup="true" aria-expanded="false">
+                                    Download Report
+                                    <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </button>
+                                <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50">CSV</a>
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50">XLSX</a>
+                                    <a href="#" class="block px-3 py-2 text-sm hover:bg-gray-50">PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table id="facilitiesTable" class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 text-xs uppercase text-gray-500">
+                                <tr>
+                                    <th class="px-3 py-2 text-left">Code</th>
+                                    <th class="px-3 py-2 text-left">Facility Code</th>
+                                    <th class="px-3 py-2 text-left">Campus</th>
+                                    <th class="px-3 py-2 text-left">Building</th>
+                                    <th class="px-3 py-2 text-left">Door No</th>
+                                    <th class="px-3 py-2 text-left">Description</th>
+                                    <th class="px-3 py-2 text-left">Facility Type</th>
+                                    <th class="px-3 py-2 text-left">Facility Sub Type</th>
+                                    <th class="px-3 py-2 text-left">Room Type</th>
+                                    <th class="px-3 py-2 text-right">Capacity</th>
+                                    <th class="px-3 py-2 text-left">Status</th>
+                                    <th class="px-3 py-2 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-100 text-sm">
+                                <!-- Sample rows -->
+                                <tr>
+                                    <td class="px-3 py-2 text-gray-700">CASEZ26</td>
+                                    <td class="px-3 py-2 text-gray-700">MAIN-CASE-Z26</td>
+                                    <td class="px-3 py-2">MAIN</td>
+                                    <td class="px-3 py-2">CASE</td>
+                                    <td class="px-3 py-2">Z26</td>
+                                    <td class="px-3 py-2">SINF (36)</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">Lecture Room</td>
+                                    <td class="px-3 py-2 text-right">36</td>
+                                    <td class="px-3 py-2"><span class="inline-flex items-center rounded-full bg-green-100 text-green-700 px-2 py-0.5 text-xs">Active</span></td>
+                                    <td class="px-3 py-2">
+                                        <div class="flex items-center gap-2">
+                                            <a href="facility-details.html?code=CASEZ26" class="p-1 rounded hover:bg-gray-100" title="View" aria-label="View"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.5 12s3.5-7.5 10.5-7.5 10.5 7.5 10.5 7.5-3.5 7.5-10.5 7.5S1.5 12 1.5 12Zm10.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></a>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Edit" aria-label="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m-7.586 7.586a2 2 0 010-2.828l6.586-6.586a2 2 0 112.828 2.828L8.243 12.586a2 2 0 01-2.828 0zM7 17h10"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Duplicate" aria-label="Duplicate"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h10a2 2 0 002-2v-6a2 2 0 00-2-2h-6"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Delete" aria-label="Delete"><svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 3h4a1 1 0 011 1v2H9V4a1 1 0 011-1z"/></svg></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2 text-gray-700">SOSB07</td>
+                                    <td class="px-3 py-2 text-gray-700">MAIN-SOS-B07</td>
+                                    <td class="px-3 py-2">MAIN</td>
+                                    <td class="px-3 py-2">SOS</td>
+                                    <td class="px-3 py-2">B07</td>
+                                    <td class="px-3 py-2">SINF (107)</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">Lecture Room</td>
+                                    <td class="px-3 py-2 text-right">107</td>
+                                    <td class="px-3 py-2"><span class="inline-flex items-center rounded-full bg-green-100 text-green-700 px-2 py-0.5 text-xs">Active</span></td>
+                                    <td class="px-3 py-2">
+                                        <div class="flex items-center gap-2">
+                                            <a href="facility-details.html?code=SOSB07" class="p-1 rounded hover:bg-gray-100" title="View" aria-label="View"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.5 12s3.5-7.5 10.5-7.5 10.5 7.5 10.5 7.5-3.5 7.5-10.5 7.5S1.5 12 1.5 12Zm10.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></a>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Edit" aria-label="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m-7.586 7.586a2 2 0 010-2.828l6.586-6.586a2 2 0 112.828 2.828L8.243 12.586a2 2 0 01-2.828 0zM7 17h10"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Duplicate" aria-label="Duplicate"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h10a2 2 0 002-2v-6a2 2 0 00-2-2h-6"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Delete" aria-label="Delete"><svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 3h4a1 1 0 011 1v2H9V4a1 1 0 011-1z"/></svg></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2 text-gray-700">ELC115</td>
+                                    <td class="px-3 py-2 text-gray-700">MAIN-ELC-115</td>
+                                    <td class="px-3 py-2">MAIN</td>
+                                    <td class="px-3 py-2">ELC</td>
+                                    <td class="px-3 py-2">115</td>
+                                    <td class="px-3 py-2">SINF (55)</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">Classroom</td>
+                                    <td class="px-3 py-2">ELC Classroom</td>
+                                    <td class="px-3 py-2 text-right">55</td>
+                                    <td class="px-3 py-2"><span class="inline-flex items-center rounded-full bg-green-100 text-green-700 px-2 py-0.5 text-xs">Active</span></td>
+                                    <td class="px-3 py-2">
+                                        <div class="flex items-center gap-2">
+                                            <a href="facility-details.html?code=ELC115" class="p-1 rounded hover:bg-gray-100" title="View" aria-label="View"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.5 12s3.5-7.5 10.5-7.5 10.5 7.5 10.5 7.5-3.5 7.5-10.5 7.5S1.5 12 1.5 12Zm10.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></a>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Edit" aria-label="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m-7.586 7.586a2 2 0 010-2.828l6.586-6.586a2 2 0 112.828 2.828L8.243 12.586a2 2 0 01-2.828 0zM7 17h10"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Duplicate" aria-label="Duplicate"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h10a2 2 0 002-2v-6a2 2 0 00-2-2h-6"/></svg></button>
+                                            <button class="p-1 rounded hover:bg-gray-100" title="Delete" aria-label="Delete"><svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 3h4a1 1 0 011 1v2H9V4a1 1 0 011-1z"/></svg></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <label>Show</label>
+                            <select id="pageSize" class="border border-gray-300 rounded-md p-1.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                            </select>
+                            <span>rows</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-sm">
+                            <button class="px-2 py-1 rounded border hover:bg-gray-50" aria-label="Previous">&lt;</button>
+                            <button class="px-3 py-1 rounded border bg-gray-900 text-white">1</button>
+                            <button class="px-3 py-1 rounded border">2</button>
+                            <button class="px-3 py-1 rounded border">3</button>
+                            <span class="px-2">…</span>
+                            <button class="px-2 py-1 rounded border hover:bg-gray-50" aria-label="Next">&gt;</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-slate-800 text-white text-xs p-3 flex justify-end items-center z-40 sticky bottom-0 flex-shrink-0">
+        <div class="flex items-center space-x-4">
+            <span>Copyright © 2025 Koç University Version 9.1.12</span>
+            <a href="#" class="hover:text-indigo-400">Privacy Policy</a>
+            <a href="#" class="hover:text-indigo-400">Cookie Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // List search filter
+        document.getElementById('listSearch')?.addEventListener('input', function() {
+            const q = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#facilitiesTable tbody tr');
+            rows.forEach(r => {
+                const text = r.textContent.toLowerCase();
+                r.classList.toggle('hidden', !text.includes(q));
+            });
+        });
+
+        // Download dropdown
+        (function() {
+            const btn = document.getElementById('downloadBtn');
+            const menu = document.getElementById('downloadMenu');
+            if (!btn || !menu) return;
+            btn.addEventListener('click', () => {
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                menu.classList.toggle('hidden', expanded);
+            });
+            document.addEventListener('click', (e) => {
+                if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    menu.classList.add('hidden');
+                }
+            });
+        })();
+
+        // Placeholder for Add New
+        document.getElementById('addFacilityBtn')?.addEventListener('click', () => {
+            alert('Add New Facility form coming soon.');
+        });
+    </script>
+</body>
+</html>

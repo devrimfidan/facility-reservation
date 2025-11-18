@@ -30,7 +30,7 @@
         </div>
         
         <div class="flex items-center space-x-3">
-            <button class="text-gray-500 hover:text-ku-purple">
+            <button class="text-gray-500 hover:text-ku-purple" title="Notifications" aria-label="Notifications">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-2.81A3 3 0 0018 10V8a6 6 0 10-12 0v2c0 1.5.54 2.92 1.405 4.19L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9"></path></svg>
             </button>
             <div class="flex items-center space-x-2 cursor-pointer">
@@ -78,6 +78,12 @@
                             <span class="hidden sm:block">Student Availability</span>
                         </a>
                     </li>
+                    <li class="group">
+                        <a href="manage-facilities.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"></path></svg>
+                            <span class="hidden sm:block">Manage Facilities</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="powerbi-reports.html" class="flex items-center p-2 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition duration-150">
                             <svg class="w-6 h-6 sm:mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a1 1 0 0 0-1 1v16a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1Zm5 4a1 1 0 0 0-1 1v12a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm5 3a1 1 0 0 0-1 1v9a1 1 0 0 0 2 0v-9a1 1 0 0 0-1-1Zm5-4a1 1 0 0 0-1 1v13a1 1 0 0 0 2 0V7a1 1 0 0 0-1-1Z"/></svg>
@@ -101,29 +107,157 @@
                     <p class="text-gray-500">Administrative view to manage facility reservations.</p>
                 </div>
 
-                <!-- Filter Tabs -->
+                <!-- Search Filters Card -->
                 <div class="bg-white rounded-xl shadow-lg mb-6">
-                    <div class="flex border-b">
-                        <button class="px-6 py-4 text-sm font-medium text-ku-purple border-b-2 border-ku-purple">
-                            All Reservations
-                        </button>
-                        <button class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-ku-purple">
-                            Pending Approval
-                        </button>
-                        <button class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-ku-purple">
-                            Today's Reservations
-                        </button>
+                    <div class="w-full flex justify-between items-center p-6 border-b border-gray-200">
+                        <h2 class="text-xl font-semibold text-gray-800">Search Filters</h2>
+                    </div>
+                    
+                    <div class="p-6">
+                        <!-- Accordion 1: Basic Filters -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="basicFilters">
+                                Basic Filters
+                                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="basicFilters" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    <!-- Reservation Number -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterResNumber" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Reservation Number</label>
+                                        <input id="filterResNumber" type="text" placeholder="RES-2025-..." class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter by Reservation Number" aria-label="Filter by Reservation Number">
+                                    </div>
+                                    <!-- Person Number with search icon -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterPersonNumber" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Person Number</label>
+                                        <div class="w-full sm:w-2/3 relative">
+                                            <input id="filterPersonNumber" type="text" placeholder="Person ID..." class="w-full border border-gray-300 rounded-lg p-2.5 pr-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter by Person Number" aria-label="Filter by Person Number">
+                                            <button type="button" onclick="openPersonSearchModal()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-ku-purple transition" title="Search Person" aria-label="Search Person">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Reservation Type -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterReservationType" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Reservation Type</label>
+                                        <select id="filterReservationType" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150" title="Filter by Reservation Type" aria-label="Filter by Reservation Type">
+                                            <option value="">All</option>
+                                            <option>Course</option>
+                                            <option>Event</option>
+                                            <option>Meeting</option>
+                                            <option>Exam</option>
+                                        </select>
+                                    </div>
+                                    <!-- Course with search icon -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterCourse" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Course</label>
+                                        <div class="w-full sm:w-2/3 relative">
+                                            <input id="filterCourse" type="text" placeholder="Course code..." class="w-full border border-gray-300 rounded-lg p-2.5 pr-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter by Course" aria-label="Filter by Course">
+                                            <button type="button" onclick="openCourseSearchModal()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-ku-purple transition" title="Search Course" aria-label="Search Course">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion 2: Date & Time -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="dateTimeFilters">
+                                Date & Time
+                                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="dateTimeFilters" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    <!-- Begin Date -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterBeginDate" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Begin Date</label>
+                                        <input id="filterBeginDate" type="date" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter Begin Date" aria-label="Filter Begin Date">
+                                    </div>
+                                    <!-- End Date -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterEndDate" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">End Date</label>
+                                        <input id="filterEndDate" type="date" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter End Date" aria-label="Filter End Date">
+                                    </div>
+                                    <!-- Start Time -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterStartTime" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Start Time</label>
+                                        <input id="filterStartTime" type="time" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter Start Time" aria-label="Filter Start Time">
+                                    </div>
+                                    <!-- End Time -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterEndTime" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">End Time</label>
+                                        <input id="filterEndTime" type="time" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter End Time" aria-label="Filter End Time">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion 3: Facility Details -->
+                        <div class="mb-6 border border-gray-200 rounded-lg">
+                            <button type="button" class="w-full flex justify-between items-center p-4 text-lg font-medium text-gray-700 hover:bg-gray-50 transition duration-150 accordion-toggle" data-target="facilityFilters">
+                                Facility Details
+                                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="facilityFilters" class="accordion-content p-6 transition-all duration-300">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    <!-- Campus -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterCampus" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Campus</label>
+                                        <select id="filterCampus" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150" title="Filter by Campus" aria-label="Filter by Campus">
+                                            <option value="">All</option>
+                                            <option>Main Campus</option>
+                                            <option>East Campus</option>
+                                            <option>West Campus</option>
+                                        </select>
+                                    </div>
+                                    <!-- Building -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterBuilding" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Building</label>
+                                        <select id="filterBuilding" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150" title="Filter by Building" aria-label="Filter by Building">
+                                            <option value="">All</option>
+                                            <option>SNA</option>
+                                            <option>SOS</option>
+                                            <option>ELC</option>
+                                        </select>
+                                    </div>
+                                    <!-- Room -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterRoom" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Room</label>
+                                        <input id="filterRoom" type="text" placeholder="Room number..." class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple transition duration-150" title="Filter by Room" aria-label="Filter by Room">
+                                    </div>
+                                    <!-- Room Type -->
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center">
+                                        <label for="filterRoomType" class="text-sm font-medium text-gray-700 w-full sm:w-1/3 mb-1 sm:mb-0 sm:pr-4 flex-shrink-0">Room Type</label>
+                                        <select id="filterRoomType" class="w-full sm:w-2/3 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple appearance-none transition duration-150" title="Filter by Room Type" aria-label="Filter by Room Type">
+                                            <option value="">All</option>
+                                            <option>Classroom</option>
+                                            <option>Meeting Room</option>
+                                            <option>Common Area</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search/Reset Buttons -->
+                                <div class="flex items-center justify-end gap-3">
+                            <button id="searchFilters" class="inline-flex items-center bg-ku-purple-new hover:bg-ku-purple-new-hover text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-150" title="Search" aria-label="Search">Search</button>
+                            <button id="resetFilters" class="inline-flex items-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150" title="Reset Filters" aria-label="Reset Filters">Reset</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Search Results Card -->
                 <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-4">All Reservations</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-4">Search Results</h2>
                     
                     <!-- Table Controls -->
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-3 sm:space-y-0">
                         <div class="relative w-full sm:w-auto">
-                            <input type="text" placeholder="Search reservations..." class="w-full sm:w-64 border border-gray-300 rounded-lg p-2.5 pl-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150">
+                            <input id="globalSearch" type="text" placeholder="Search reservations..." aria-label="Search reservations" class="w-full sm:w-64 border border-gray-300 rounded-lg p-2.5 pl-10 focus:ring-ku-purple focus:border-ku-purple transition duration-150">
                             <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                         
@@ -136,42 +270,142 @@
 
                     <!-- Results Table -->
                     <div class="overflow-x-auto rounded-xl border border-gray-200">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table id="reservationsTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reservation ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reservation Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facility</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Building</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Room</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
+                                <!-- 10 Sample Reservations using facilities from Search & Reserve -->
+                                <tr data-id="RES-2025-001" data-user="Ahmet Yılmaz" data-type="Course" data-desc="COMP101 Lab Session" data-building="SNA" data-room="A44" data-date="2025-11-19" data-status="Confirmed">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Course</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">COMP101 Lab Session</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ahmet Yılmaz</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Conference Room A</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 15, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14:00 - 16:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 19, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">09:00 - 11:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A44</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Confirmed</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                        <a href="#" class="text-red-600 hover:text-red-900">Cancel</a>
-                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a><a href="#" class="text-red-600 hover:text-red-900">Cancel</a></td>
                                 </tr>
-                                <tr>
+                                <tr data-id="RES-2025-002" data-user="Elif Demir" data-type="Event" data-desc="Student Council Meeting" data-building="SOS" data-room="186" data-date="2025-11-20" data-status="Pending">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Event</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Student Council Meeting</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Elif Demir</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Computer Lab 3</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 20, 2025</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 - 12:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SOS</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">186</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-semibold">Pending</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-green-600 hover:text-green-900 mr-3">Approve</a>
-                                        <a href="#" class="text-red-600 hover:text-red-900">Reject</a>
-                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-green-600 hover:text-green-900 mr-3">Approve</a><a href="#" class="text-red-600 hover:text-red-900">Reject</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-003" data-user="Mert Kaya" data-type="Meeting" data-desc="Department Review" data-building="ELC" data-room="115" data-date="2025-11-21" data-status="Confirmed">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Department Review</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mert Kaya</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 21, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13:00 - 15:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ELC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">115</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Confirmed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a><a href="#" class="text-red-600 hover:text-red-900">Cancel</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-004" data-user="Zeynep Ak" data-type="Course" data-desc="MATH201 Tutorial" data-building="SNA" data-room="A52" data-date="2025-11-22" data-status="Cancelled">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Course</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">MATH201 Tutorial</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zeynep Ak</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 22, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16:00 - 18:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A52</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Cancelled</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900">View</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-005" data-user="Selin Uçar" data-type="Event" data-desc="Club Fair" data-building="Main Campus" data-room="Kurucular" data-date="2025-11-23" data-status="Confirmed">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-005</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Event</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Club Fair</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Selin Uçar</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 23, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11:00 - 13:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Campus</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kurucular</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Confirmed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a><a href="#" class="text-red-600 hover:text-red-900">Cancel</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-006" data-user="Kerem Çelik" data-type="Event" data-desc="Photography Exhibition" data-building="Main Campus" data-room="Şadırvan" data-date="2025-11-24" data-status="Pending">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-006</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Event</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Photography Exhibition</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kerem Çelik</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 24, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12:00 - 13:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Campus</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Şadırvan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-semibold">Pending</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-green-600 hover:text-green-900 mr-3">Approve</a><a href="#" class="text-red-600 hover:text-red-900">Reject</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-007" data-user="Ece Baş" data-type="Exam" data-desc="Midterm Exam" data-building="SNA" data-room="A44" data-date="2025-11-25" data-status="Rejected">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-007</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Exam</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Midterm Exam</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ece Baş</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 25, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15:00 - 16:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A44</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">Rejected</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900">View</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-008" data-user="Berk Arslan" data-type="Meeting" data-desc="Research Collaboration" data-building="ELC" data-room="115" data-date="2025-11-26" data-status="Confirmed">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-008</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Meeting</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Research Collaboration</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Berk Arslan</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 26, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">09:30 - 11:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ELC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">115</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Confirmed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a><a href="#" class="text-red-600 hover:text-red-900">Cancel</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-009" data-user="Derya Aydın" data-type="Course" data-desc="PHYS101 Lecture" data-building="SNA" data-room="A52" data-date="2025-11-27" data-status="Pending">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-009</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Course</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">PHYS101 Lecture</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Derya Aydın</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 27, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14:30 - 16:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SNA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A52</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-semibold">Pending</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-green-600 hover:text-green-900 mr-3">Approve</a><a href="#" class="text-red-600 hover:text-red-900">Reject</a></td>
+                                </tr>
+                                <tr data-id="RES-2025-010" data-user="Cem Korkmaz" data-type="Event" data-desc="Alumni Gathering" data-building="Main Campus" data-room="Kurucular" data-date="2025-11-28" data-status="Confirmed">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RES-2025-010</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Event</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Alumni Gathering</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Cem Korkmaz</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 28, 2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 - 12:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Campus</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kurucular</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">Confirmed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a><a href="#" class="text-red-600 hover:text-red-900">Cancel</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -180,18 +414,18 @@
                     <!-- Pagination -->
                     <div class="mt-4 flex justify-between items-center text-sm text-gray-600">
                         <div class="flex items-center space-x-2">
-                            <select class="border border-gray-300 rounded-lg p-1.5 text-xs bg-white">
+                            <select class="border border-gray-300 rounded-lg p-1.5 text-xs bg-white" title="Rows per page" aria-label="Rows per page">
                                 <option>10</option>
                                 <option>25</option>
                                 <option>50</option>
                             </select>
-                            <span>2 entries shown</span>
+                            <span><span id="entriesCount">10</span> entries shown</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150" title="Previous" aria-label="Previous">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                             </button>
-                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150">
+                            <button class="text-gray-400 p-1 rounded-lg border border-gray-300 hover:text-ku-purple transition duration-150" title="Next" aria-label="Next">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                             </button>
                         </div>
@@ -201,8 +435,104 @@
             </main>
         </div>
     </div>
+
+    <!-- Person Search Modal -->
+    <div id="personSearchModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="px-6 py-4 border-b flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-800">Search Person</h3>
+                <button type="button" onclick="closePersonSearchModal()" class="text-gray-400 hover:text-gray-600 transition" title="Close" aria-label="Close Person Search Modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="text" id="personSearchInput" placeholder="Search by name or ID..." class="w-full border border-gray-300 rounded-lg p-2.5 mb-4 focus:ring-ku-purple focus:border-ku-purple" aria-label="Person Search Input">
+                <div class="space-y-2" id="personSearchResults">
+                    <button type="button" onclick="selectPerson('12345', 'Ahmet Yılmaz')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">Ahmet Yılmaz</div>
+                        <div class="text-sm text-gray-500">ID: 12345</div>
+                    </button>
+                    <button type="button" onclick="selectPerson('23456', 'Elif Demir')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">Elif Demir</div>
+                        <div class="text-sm text-gray-500">ID: 23456</div>
+                    </button>
+                    <button type="button" onclick="selectPerson('34567', 'Mert Kaya')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">Mert Kaya</div>
+                        <div class="text-sm text-gray-500">ID: 34567</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Search Modal -->
+    <div id="courseSearchModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="px-6 py-4 border-b flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-800">Search Course</h3>
+                <button type="button" onclick="closeCourseSearchModal()" class="text-gray-400 hover:text-gray-600 transition" title="Close" aria-label="Close Course Search Modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="text" id="courseSearchInput" placeholder="Search by course code or name..." class="w-full border border-gray-300 rounded-lg p-2.5 mb-4 focus:ring-ku-purple focus:border-ku-purple" aria-label="Course Search Input">
+                <div class="space-y-2" id="courseSearchResults">
+                    <button type="button" onclick="selectCourse('COMP101', 'Introduction to Computer Science')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">COMP101 - Introduction to Computer Science</div>
+                        <div class="text-sm text-gray-500">Fall 2025</div>
+                    </button>
+                    <button type="button" onclick="selectCourse('MATH201', 'Calculus II')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">MATH201 - Calculus II</div>
+                        <div class="text-sm text-gray-500">Fall 2025</div>
+                    </button>
+                    <button type="button" onclick="selectCourse('PHYS101', 'General Physics I')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                        <div class="font-medium">PHYS101 - General Physics I</div>
+                        <div class="text-sm text-gray-500">Fall 2025</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
         
     <!-- Footer -->
+                    <div id="courseSearchModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+                        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+                            <div class="px-6 py-4 border-b flex items-center justify-between">
+                                <h3 class="text-lg font-semibold text-gray-800">Search Course</h3>
+                                <button type="button" onclick="closeCourseSearchModal()" class="text-gray-400 hover:text-gray-600 transition" title="Close" aria-label="Close Course Search Modal">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </button>
+                            </div>
+                            <div class="p-6 overflow-y-auto flex-1">
+                                <input type="text" id="courseSearchInput" placeholder="Search by course code or name..." class="w-full border border-gray-300 rounded-lg p-2.5 mb-4 focus:ring-ku-purple focus:border-ku-purple" aria-label="Course Search Input">
+                                <div class="space-y-2" id="courseSearchResults">
+                                    <button type="button" onclick="selectCourse('COMP101', 'Introduction to Computer Science')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                                        <div class="font-medium">COMP101 - Introduction to Computer Science</div>
+                                        <div class="text-sm text-gray-500">Fall 2025</div>
+                                    </button>
+                                    <button type="button" onclick="selectCourse('MATH201', 'Calculus II')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                                        <div class="font-medium">MATH201 - Calculus II</div>
+                                        <div class="text-sm text-gray-500">Fall 2025</div>
+                                    </button>
+                                    <button type="button" onclick="selectCourse('PHYS101', 'General Physics I')" class="w-full text-left p-3 border rounded-lg hover:bg-gray-50 transition">
+                                        <div class="font-medium">PHYS101 - General Physics I</div>
+                                        <div class="text-sm text-gray-500">Fall 2025</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                   
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Person Search Modal -->
     <footer class="w-full bg-slate-800 text-white text-xs p-3 flex justify-end items-center z-40 sticky bottom-0 flex-shrink-0">
         <div class="flex items-center space-x-4">
             <span>Copyright © 2025 Koç University Version 9.1.12</span>
@@ -211,5 +541,148 @@
         </div>
     </footer>
 
+    <script>
+      // Modal functions
+      function openPersonSearchModal() {
+        document.getElementById('personSearchModal').classList.remove('hidden');
+      }
+      function closePersonSearchModal() {
+        document.getElementById('personSearchModal').classList.add('hidden');
+      }
+      function selectPerson(id, name) {
+        document.getElementById('filterPersonNumber').value = id + ' - ' + name;
+        closePersonSearchModal();
+      }
+
+      function openCourseSearchModal() {
+        document.getElementById('courseSearchModal').classList.remove('hidden');
+      }
+      function closeCourseSearchModal() {
+        document.getElementById('courseSearchModal').classList.add('hidden');
+      }
+      function selectCourse(code, name) {
+        document.getElementById('filterCourse').value = code + ' - ' + name;
+        closeCourseSearchModal();
+      }
+
+      // Accordion logic
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggles = document.querySelectorAll('.accordion-toggle');
+        toggles.forEach(toggle => {
+          const targetId = toggle.getAttribute('data-target');
+          const content = document.getElementById(targetId);
+          const icon = toggle.querySelector('svg');
+          
+          // Start with accordions open by default
+          if (content) {
+            content.style.display = 'block';
+            if (icon) icon.classList.add('rotate-180');
+          }
+
+          toggle.addEventListener('click', function() {
+            if (content.style.display === 'none') {
+              content.style.display = 'block';
+              if (icon) icon.classList.add('rotate-180');
+            } else {
+              content.style.display = 'none';
+              if (icon) icon.classList.remove('rotate-180');
+            }
+          });
+        });
+      });
+
+      // Filtering logic
+      (function(){
+        const table = document.getElementById('reservationsTable');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const entriesCountEl = document.getElementById('entriesCount');
+
+        const globalSearch = document.getElementById('globalSearch');
+        const filterResNumber = document.getElementById('filterResNumber');
+        const filterPersonNumber = document.getElementById('filterPersonNumber');
+        const filterBeginDate = document.getElementById('filterBeginDate');
+        const filterEndDate = document.getElementById('filterEndDate');
+        const filterStartTime = document.getElementById('filterStartTime');
+        const filterEndTime = document.getElementById('filterEndTime');
+        const filterCourse = document.getElementById('filterCourse');
+        const filterReservationType = document.getElementById('filterReservationType');
+        const filterBuilding = document.getElementById('filterBuilding');
+        const filterRoomType = document.getElementById('filterRoomType');
+        const searchBtn = document.getElementById('searchFilters');
+        const resetBtn = document.getElementById('resetFilters');
+
+        function parseISO(d){ if(!d) return null; const dt = new Date(d); return isNaN(dt.getTime())? null: dt; }
+
+        function matches(row){
+          const ds = row.dataset;
+          const q = (globalSearch.value || '').trim().toLowerCase();
+          const resNum = (filterResNumber.value || '').trim().toLowerCase();
+          const personNum = (filterPersonNumber.value || '').trim().toLowerCase();
+          const beginDate = parseISO(filterBeginDate.value);
+          const endDate = parseISO(filterEndDate.value);
+          const startTime = (filterStartTime.value || '').trim();
+          const endTime = (filterEndTime.value || '').trim();
+          const course = (filterCourse.value || '').trim().toLowerCase();
+          const resType = filterReservationType.value;
+          const building = filterBuilding.value;
+          const roomType = filterRoomType.value;
+
+          // Global search across id, user, facility, status, building, date
+          if(q){
+            const hay = `${ds.id} ${ds.user} ${ds.facility} ${ds.status} ${ds.building} ${ds.date}`.toLowerCase();
+            if(!hay.includes(q)) return false;
+          }
+
+          if(resNum && !(ds.id || '').toLowerCase().includes(resNum)) return false;
+          if(personNum && !(ds.user || '').toLowerCase().includes(personNum)) return false;
+          if(building && ds.building !== building) return false;
+
+          // Date range filter
+          if(beginDate || endDate){
+            const rDate = parseISO(ds.date);
+            if(!rDate) return false;
+            if(beginDate && rDate < beginDate) return false;
+            if(endDate && rDate > endDate) return false;
+          }
+
+          return true;
+        }
+
+        function applyFilters(){
+          let visible = 0;
+          rows.forEach(r => {
+            if(matches(r)){
+              r.style.display = '';
+              visible++;
+            } else {
+              r.style.display = 'none';
+            }
+          });
+          if(entriesCountEl) entriesCountEl.textContent = String(visible);
+        }
+
+        function resetFilters(){
+          filterResNumber.value = '';
+          filterPersonNumber.value = '';
+          filterBeginDate.value = '';
+          filterEndDate.value = '';
+          filterStartTime.value = '';
+          filterEndTime.value = '';
+          filterCourse.value = '';
+          filterReservationType.value = '';
+          filterBuilding.value = '';
+          filterRoomType.value = '';
+          globalSearch.value = '';
+          applyFilters();
+        }
+
+        if(searchBtn) searchBtn.addEventListener('click', applyFilters);
+        if(resetBtn) resetBtn.addEventListener('click', resetFilters);
+        if(globalSearch) globalSearch.addEventListener('input', applyFilters);
+
+        // Initial count
+        applyFilters();
+      })();
+    </script>
 </body>
 </html>
