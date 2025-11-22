@@ -163,6 +163,35 @@
               <div id="cbCalendar" class="space-y-2" aria-live="polite"><div class="text-sm text-gray-500">Loading…</div></div>
               <div class="mt-3 text-xs text-gray-500">Purple = Reserved, empty = Available (08:00–20:00)</div>
             </div>
+            <!-- Recurring Reservation Configuration -->
+            <div class="mt-6 bg-gray-50 p-4 rounded-lg space-y-4">
+              <h4 class="text-sm font-semibold text-gray-700">Recurring Reservation</h4>
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <label for="repeatEveryValue" class="text-xs font-medium text-gray-600 w-full sm:w-1/5 flex-shrink-0">Repeat every</label>
+                <div class="flex gap-3 w-full sm:w-4/5">
+                  <input id="repeatEveryValue" type="number" min="1" value="1" class="w-24 border border-gray-300 rounded-lg p-2.5 focus:ring-ku-purple focus:border-ku-purple" />
+                  <select id="repeatEveryUnit" class="w-32 border border-gray-300 rounded-lg p-2.5 bg-white focus:ring-ku-purple focus:border-ku-purple">
+                    <option value="week">week</option>
+                    <option value="day">day</option>
+                    <option value="month">month</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Weekly day selection -->
+              <div id="repeatWeekDaysWrapper" class="flex flex-col sm:flex-row items-start sm:items-start gap-4">
+                <label class="text-xs font-medium text-gray-600 w-full sm:w-1/5 flex-shrink-0">Select Days</label>
+                <div id="repeatWeekDays" class="flex flex-wrap gap-3 w-full sm:w-4/5">
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="mon" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Monday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="tue" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Tuesday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="wed" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Wednesday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="thu" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Thursday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="fri" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Friday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="sat" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Saturday</span></label>
+                  <label class="flex items-center cursor-pointer text-xs font-medium text-gray-700"><input type="checkbox" value="sun" class="w-4 h-4 text-ku-purple border-gray-300 rounded focus:ring-ku-purple" disabled><span class="ml-2">Sunday</span></label>
+                </div>
+              </div>
+              <div class="text-xs text-gray-500">Days become selectable when recurrence unit is set to "week".</div>
+            </div>
           </div>
 
           <!-- Facility Properties Tab -->
@@ -326,7 +355,12 @@
         const data = {
           whiteBoards: Number(document.getElementById('propWhiteBoard').value || 0),
           projectors: Number(document.getElementById('propProjector').value || 0),
-          connection: Array.from(document.getElementById('propConnection').selectedOptions).map(o=>o.value),
+          connection: {
+            vga: document.getElementById('propVGA').value === 'Yes',
+            hdmi: document.getElementById('propHDMI').value === 'Yes',
+            miniDisplayPort: document.getElementById('propMiniDP').value === 'Yes',
+            wirelessDisplayPort: document.getElementById('propWirelessDP').value === 'Yes'
+          },
           documentCamera: document.getElementById('propDocumentCamera').value === 'Yes',
           socketForStudents: document.getElementById('propSocketStudents').value === 'Yes',
           window: document.getElementById('propWindow').value === 'Yes',
@@ -384,6 +418,31 @@
             tbody.appendChild(er);
           }
         });
+      });
+    }
+
+    // Recurring reservation logic (Classroom tab)
+    const repeatValue = document.getElementById('repeatEveryValue');
+    const repeatUnit = document.getElementById('repeatEveryUnit');
+    const repeatDayCheckboxes = Array.from(document.querySelectorAll('#repeatWeekDays input[type="checkbox"]'));
+
+    function updateRepeatUI() {
+      const unit = repeatUnit.value;
+      const isWeekly = unit === 'week';
+      repeatDayCheckboxes.forEach(cb => {
+        cb.disabled = !isWeekly;
+        if (!isWeekly) cb.checked = false;
+      });
+    }
+
+    if (repeatUnit) {
+      repeatUnit.addEventListener('change', updateRepeatUI);
+      updateRepeatUI();
+    }
+
+    if (repeatValue) {
+      repeatValue.addEventListener('input', () => {
+        if (repeatValue.value === '' || Number(repeatValue.value) < 1) repeatValue.value = 1;
       });
     }
   </script>
